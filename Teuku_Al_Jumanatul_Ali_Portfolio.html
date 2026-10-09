@@ -1,0 +1,1655 @@
+﻿<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Teuku Al Jumanatul Ali â€” Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   TOKENS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+:root {
+  --bg: #0d0d0d;
+  --bg2: #141414;
+  --surface: #1a1a1a;
+  --border: rgba(255,255,255,0.08);
+  --border-h: rgba(255,255,255,0.18);
+  --text: #f0f0f0;
+  --muted: #8c8c8c;
+  --muted2: #444;
+  --nav-bg: rgba(13,13,13,0.92);
+  --hire-bg: #f0f0f0;
+  --hire-text: #0d0d0d;
+  --wave-op: .13;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+[data-theme="light"] {
+  --bg: #f2f2f0;
+  --bg2: #e8e8e6;
+  --surface: #dfdedd;
+  --border: rgba(0,0,0,0.08);
+  --border-h: rgba(0,0,0,0.18);
+  --text: #0d0d0d;
+  --muted: #666;
+  --muted2: #bbb;
+  --nav-bg: rgba(242,242,240,0.92);
+  --hire-bg: #0d0d0d;
+  --hire-text: #f0f0f0;
+  --wave-op: .17;
+}
+
+*, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px);
+  scroll-padding-bottom: 24px;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .about-heading-track { animation: none; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+html.motion-paused *, html.motion-paused *::before, html.motion-paused *::after {
+  animation-play-state: paused !important;
+}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--muted2); border-radius: 2px; }
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   THEME TRANSITION (View Transitions + fallback)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
+/* fallback: warna berubah halus di semua elemen (tanpa kedip) */
+html.theme-fade *, html.theme-fade *::before, html.theme-fade *::after {
+  transition: background-color .55s ease, color .55s ease, border-color .55s ease,
+              fill .55s ease, stroke .55s ease, -webkit-text-stroke-color .55s ease,
+              box-shadow .55s ease !important;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   NAVBAR â€” persis referensi
+   full-width, bukan pill
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  transition: background-color .35s ease, border-color .35s ease, padding .35s cubic-bezier(.22,1,.36,1);
+}
+nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
+/* brand kiri: kotak kecil + nama */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.nav-logo-box {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.nav-logo-box img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.nav-name {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+/* links tengah */
+.nav-links {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: var(--text); background: var(--border); }
+/* kanan: icon + hire me */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.theme-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+}
+.theme-btn .ui-icon { width: 17px; height: 17px; }
+.theme-btn:hover { border-color: var(--border-h); color: var(--text); }
+.hire-btn {
+  background: var(--hire-bg);
+  color: var(--hire-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s, transform 0.15s;
+  letter-spacing: 0.01em;
+}
+.hire-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+/* mobile hamburger */
+.menu-btn {
+  display: none;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+/* mobile overlay */
+.mob-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--nav-bg);
+  z-index: 250;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  backdrop-filter: blur(24px);
+}
+.mob-overlay.open { display: flex; animation: mobIn .35s ease both; }
+@keyframes mobIn { from { opacity: 0; } to { opacity: 1; } }
+:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.mob-overlay a {
+  color: var(--muted);
+  text-decoration: none;
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 2.2rem;
+  padding: 10px 0;
+  transition: color 0.2s;
+}
+.mob-overlay a:hover { color: var(--text); }
+.mob-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 38px; height: 38px;
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 720px) {
+  nav { padding: 12px 20px; }
+  .nav-links { display: none; }
+  .menu-btn { display: flex; }
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   HERO
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#hero {
+  height: 100vh;
+  min-height: 580px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg);
+}
+/* marquee giant text */
+.mq-wrap {
+  position: absolute;
+  left: 0; right: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.mq-wrap.top { top: 25%; }
+.mq-wrap.bot { top: 58%; }
+.mq-row {
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+}
+.mq-row.fwd { animation: mq-fwd 22s linear infinite; }
+.mq-row.rev { animation: mq-rev 28s linear infinite; }
+.mq-txt {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: clamp(5rem, 14vw, 11rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding-right: 60px;
+  user-select: none;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255,255,255,0.16);
+}
+[data-theme="light"] .mq-txt { -webkit-text-stroke: 2px rgba(0,0,0,0.14); }
+@keyframes mq-fwd { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes mq-rev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+/* hero photo cutout */
+.hero-photo {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: min(700px, 96vw, calc(max(100vh, 580px) * .94));
+  display: flex;
+  align-items: flex-end;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5));
+}
+.hero-photo img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  opacity: .96;
+  mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
+}
+
+/* SCROLL DOWN kanan */
+.scroll-down {
+  position: absolute;
+  right: 28px;
+  bottom: 40px;
+  z-index: 3;
+  writing-mode: vertical-rl;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.scroll-down::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: var(--muted);
+  margin: 8px auto 0;
+  animation: sd-line 1.8s ease-in-out infinite;
+}
+@keyframes sd-line {
+  0%, 100% { transform: scaleY(1); opacity: 0.3; }
+  50% { transform: scaleY(0.4); opacity: 1; }
+}
+.cursor-blink { animation: blink .9s step-end infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   SECTION BASE
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+section { padding: 90px 48px; position: relative; }
+.eyebrow {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.sec-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin-bottom: 12px;
+}
+/* reveal */
+.rv { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.rv.in { opacity: 1; transform: translate3d(0, 0, 0); }
+.d1 { transition-delay: .1s; }
+.d2 { transition-delay: .2s; }
+.d3 { transition-delay: .3s; }
+.rv.d1 { transform: perspective(1000px) translate3d(0, 34px, -70px) rotateX(8deg) scale(.97); transform-origin: center bottom; backface-visibility: hidden; }
+.rv.d1.in { transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0) scale(1); }
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   WORK GALLERY â€” fan/3D stack seperti referensi
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#work { background: var(--bg); padding-top: 100px; }
+.work-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.work-header-left {}
+.sec-sub-work {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 380px;
+  margin-top: 8px;
+}
+.view-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: border-color .25s ease, color .25s ease, transform .35s cubic-bezier(.22,1,.36,1), background-color .25s ease;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+.view-more-btn:hover { border-color: var(--border-h); color: var(--text); transform: translateY(-2px); }
+
+/* â”€â”€ SLIDE CAROUSEL â”€â”€ */
+.fan-carousel {
+  position: relative;
+  height: 330px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: pan-y;
+  cursor: grab;
+  perspective: 1200px;
+}
+.fan-carousel.dragging { cursor: grabbing; }
+.fan-card {
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  position: absolute;
+  width: 330px;
+  height: 232px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: transform 1s var(--ease), opacity 1s var(--ease), box-shadow 1s var(--ease), filter 1s var(--ease);
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+.fan-card-inner { width: 100%; height: 100%; position: relative; background: var(--bg2); }
+.fan-card-inner::before {           /* backdrop warna per kartu */
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(120% 90% at 50% 100%, var(--c1), var(--c2) 70%);
+}
+.fan-card-inner::after {            /* kilau lembut */
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.12), transparent 35%, rgba(0,0,0,.28));
+}
+.fan-card-inner img {
+  position: absolute; left: 50%; bottom: 0; z-index: 1;
+  height: 94%; width: auto; max-width: none;
+  transform: translateX(-50%) scale(var(--zoom, 1)) translateX(var(--shift, 0%));
+  transform-origin: 50% 100%;
+  object-fit: contain; pointer-events: none; -webkit-user-drag: none;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+}
+.fan-card-label {
+  position: absolute; top: 12px; left: 12px; z-index: 3;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 4px 11px; border-radius: 100px;
+  font-size: 0.62rem; color: rgba(255,255,255,0.9);
+  font-weight: 600; letter-spacing: 0.06em;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.fan-card-label .ui-icon { width: 13px; height: 13px; color: #fff; }
+.fan-card[data-pos="-2"] { transform: translateX(-380px) translateY(34px) rotate(-8deg) scale(0.74); opacity: .35; z-index: 1; filter: saturate(.7); }
+.fan-card[data-pos="-1"] { transform: translateX(-215px) translateY(12px) rotate(-4deg) scale(0.88); opacity: .7;  z-index: 2; filter: saturate(.85); }
+.fan-card[data-pos="0"]  { transform: translateX(0) translateY(0) rotate(0deg) scale(1);             opacity: 1;   z-index: 5; box-shadow: 0 34px 80px rgba(0,0,0,.5); }
+.fan-card[data-pos="1"]  { transform: translateX(215px) translateY(12px) rotate(4deg) scale(0.88);   opacity: .7;  z-index: 2; filter: saturate(.85); }
+.fan-card[data-pos="2"]  { transform: translateX(380px) translateY(34px) rotate(8deg) scale(0.74);   opacity: .35; z-index: 1; filter: saturate(.7); }
+.fan-card[data-pos="hidden"] { transform: translateX(0) scale(.6); opacity: 0; z-index: 0; pointer-events: none; }
+
+/* controls: panah + dots */
+.fan-controls {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  margin-top: 30px;
+}
+.fan-arrow {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .2s, background .2s, transform .15s;
+}
+.fan-arrow .ui-icon { width: 17px; height: 17px; }
+.fan-arrow:hover { border-color: var(--border-h); background: var(--bg2); transform: scale(1.06); }
+.fan-arrow:active { transform: scale(.94); }
+.fan-dots { display: flex; gap: 8px; align-items: center; }
+.fan-dot {
+  width: 7px; height: 7px; border-radius: 100px; border: 0; padding: 0;
+  background: var(--muted2); cursor: pointer;
+  transition: width .5s cubic-bezier(.22,1,.36,1), background .3s;
+}
+.fan-dot.active { width: 26px; background: var(--text); }
+
+/* active project info below fan */
+.proj-info {
+  margin-top: 36px;
+  text-align: center;
+  transition: opacity .45s ease, transform .6s cubic-bezier(.22,1,.36,1);
+}
+.proj-info.swap { opacity: 0 !important; transform: translateY(10px) !important; }
+.proj-info-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  line-height: 1.2;
+  margin-bottom: 10px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.proj-info-desc {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 16px;
+}
+.proj-info-link {
+  font-size: 0.82rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: border-color 0.2s, gap 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.proj-info-link .ui-icon { width: 15px; height: 15px; transition: transform .2s ease; }
+.proj-info-link:hover { border-color: var(--text); gap: 10px; }
+.proj-info-link:hover .ui-icon { transform: translate(2px, -2px); }
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   WHAT I CAN DO â€” persis referensi
+   kiri: judul + logo grid
+   kanan: numbered cards dengan divider
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#skills { background: var(--bg2); }
+.skills-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 6px;
+  row-gap: 30px;
+  margin-top: 28px;
+}
+.tech-logo {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: border-color .3s ease, color .3s ease, background-color .3s ease,
+              transform .4s cubic-bezier(.22,1,.36,1), box-shadow .3s ease;
+  cursor: default;
+  position: relative;
+}
+.tech-logo:hover { border-color: var(--border-h); color: var(--text); transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+.tech-logo svg, .cap-icon svg, .ui-icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
+}.tech-logo span {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.5rem;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .25s ease, transform .3s cubic-bezier(.22,1,.36,1);
+  transform: translate(-50%, 4px);
+  pointer-events: none;
+}
+.tech-logo:hover span, .tech-logo:focus-visible span { opacity: 1; transform: translate(-50%, 0); }
+/* right side: numbered columns persis referensi */
+.cap-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.cap-col {}
+.cap-col + .cap-col { border-left: 1px solid var(--border); padding-left: 32px; }
+.cap-col-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.cap-num {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: var(--text);
+  line-height: 1;
+}
+.cap-cat {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: right;
+  line-height: 1.4;
+  max-width: 120px;
+}
+.cap-cat .ui-icon { width: 16px; height: 16px; flex: none; }
+/* icon placeholder */
+.cap-icon {
+  width: 48px; height: 48px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.cap-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.cap-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.ctag {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+/* â”€â”€ SKILLS: latar kontur topografi interaktif â”€â”€ */
+#skills { overflow: hidden; }
+.contour-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+.skills-layout { position: relative; z-index: 1; }
+
+/* â”€â”€ SAKLAR BAHASA â”€â”€ */
+.lang-sw {
+  position: relative; display: flex; height: 34px; padding: 3px;
+  border: 1px solid var(--border); border-radius: 8px; flex-shrink: 0;
+}
+.lang-sw button {
+  position: relative; z-index: 1; min-width: 32px; padding: 0 8px;
+  background: none; border: 0; border-radius: 5px; cursor: pointer;
+  color: var(--muted); font: 600 .68rem/1 "Inter", sans-serif; letter-spacing: .06em;
+  transition: color .35s;
+}
+.lang-sw button:hover { color: var(--text); }
+.lang-sw button.active, .lang-sw button.active:hover { color: var(--hire-text); }
+.lang-pill {
+  position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 2);
+  background: var(--hire-bg); border-radius: 5px;
+  transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+}
+.lang-sw[data-lang="en"] .lang-pill { transform: translateX(100%); }
+html.lang-vt::view-transition-old(root) { animation: none; }
+html.lang-vt::view-transition-new(root) { animation: vtIn .4s ease both; }
+@keyframes vtIn { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 480px) {
+  .nav-right { gap: 6px; }
+  .hire-btn { padding: 8px 12px; }
+  .lang-sw button { min-width: 28px; padding: 0 6px; }
+}
+
+/* â”€â”€ FOTO PROFIL KECIL â”€â”€ */
+.nav-logo-box, .about-avatar { background: linear-gradient(150deg, #3b5bdb, #101a4d); }
+.nav-logo-box {
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.nav-logo-box img { object-fit: contain; object-position: center; }
+.about-avatar { width: 58px; height: 58px; }
+.nav-logo-box img, .about-avatar img { object-position: center; }
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   ABOUT â€” persis referensi
+   Full width heading + profil kiri, traits kanan
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#about { background: var(--bg); }
+.about-big-heading {
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  margin-bottom: 36px;
+}
+.about-heading-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: about-heading-marquee 22s linear infinite;
+}
+.about-heading-copy { flex: none; }
+@keyframes about-heading-marquee {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 72px;
+  align-items: start;
+}
+.about-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.about-avatar {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--border);
+}
+.about-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.about-name { font-weight: 600; font-size: 0.92rem; }
+.about-sub { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+.about-sub .ui-icon { width: 14px; height: 14px; flex: none; }
+.about-stats-row {
+  display: flex;
+  gap: 28px;
+  margin-bottom: 18px;
+}
+.about-stat-num {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+.about-stat-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.about-bio {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+.about-bio a { color: var(--text); text-underline-offset: 3px; }
+.currently-bar {
+  display: flex;
+  gap: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.curr-item { display: flex; align-items: center; gap: 7px; font-size: 0.72rem; color: var(--muted); }
+.curr-icon { display: inline-flex; color: var(--muted); flex: none; }
+.curr-icon .ui-icon { width: 16px; height: 16px; }
+.curr-label { color: var(--text); font-weight: 500; display: block; font-size: 0.72rem; }
+/* floating traits â€” persis referensi */
+.traits-cloud {
+  position: relative;
+  height: 280px;
+}
+.trait-pill {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  animation: ft 4s ease-in-out infinite;
+}
+.trait-pill .ui-icon { width: 15px; height: 15px; color: var(--muted); flex: none; }
+.tp1 { top: 5%;  left: 0;    animation-delay: 0s; }
+.tp2 { top: 5%;  right: 0;   animation-delay: .5s; }
+.tp3 { top: 35%; left: -6%;  animation-delay: 1s; }
+.tp4 { top: 35%; right: -6%; animation-delay: 1.5s; }
+.tp5 { bottom: 20%; left: 8%; animation-delay: 2s; }
+.tp6 { bottom: 20%; right: 8%; animation-delay: 2.5s; }
+.tp7 { bottom: 2%;  left: 50%; transform: translateX(-50%); animation: ftc 4s ease-in-out 1.2s infinite; }
+@keyframes ft  { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-9px); } }
+@keyframes ftc { 0%,100%{ transform: translateX(-50%) translateY(0); } 50%{ transform: translateX(-50%) translateY(-9px); } }
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   CONTACT CTA
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+#contact { background: var(--bg2); text-align: center; }
+.cta-wrap { max-width: 600px; margin: 0 auto; }
+.cta-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin-bottom: 14px;
+}
+.cta-sub { font-size: 0.88rem; color: var(--muted); line-height: 1.75; margin-bottom: 36px; }
+.cta-sub .cta-response-icon { width: 15px; height: 15px; margin: 0 5px -3px 0; color: var(--text); opacity: .75; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-outline .ui-icon { width: 16px; height: 16px; flex: none; }
+.cta-btns .ui-icon { width: 16px; height: 16px; flex: none; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+#contact .cta-btns a:hover .ui-icon, #contact .cta-btns a:focus-visible .ui-icon { transform: translateY(-1px) scale(1.08); }
+#contact .cta-btns a { transition: color .25s ease, background-color .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
+#contact .cta-btns a:hover, #contact .cta-btns a:focus-visible {
+  background: #4f7cff;
+  color: #fff;
+  border-color: #4f7cff;
+  box-shadow: 0 10px 24px rgba(79,124,255,.24);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+.btn-solid { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--hire-bg); color: var(--hire-text); font-weight: 600; font-size: 0.82rem; padding: 12px 26px; border-radius: 10px; text-decoration: none; transition: opacity 0.2s, transform 0.15s; }
+.btn-solid:hover { opacity: 0.85; transform: translateY(-2px); }
+.btn-outline { background: transparent; color: var(--text); font-weight: 500; font-size: 0.82rem; padding: 12px 26px; border-radius: 10px; border: 1px solid var(--border); text-decoration: none; transition: border-color 0.2s, transform 0.15s; }
+.btn-outline:hover { border-color: var(--border-h); transform: translateY(-2px); }
+#contact .cta-btns a {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease,
+              box-shadow .25s ease, transform .25s ease;
+}
+#contact .cta-btns a:hover, #contact .cta-btns a:focus-visible {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+  box-shadow: 0 10px 24px rgba(0,0,0,.24);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+[data-theme="dark"] #contact .cta-btns a:hover,
+[data-theme="dark"] #contact .cta-btns a:focus-visible {
+  background: #fff;
+  color: #111;
+  border-color: #fff;
+  box-shadow: 0 10px 24px rgba(255,255,255,.14);
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   FOOTER
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 22px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.foot-copy { display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--muted); }
+.foot-copy .ui-icon { width: 14px; height: 14px; color: #e77b8b; }
+.foot-links { display: flex; gap: 20px; }
+.foot-links a { font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.foot-links a:hover { color: var(--text); }
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   RESPONSIVE
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+@media (max-width: 900px) {
+  section { padding: 64px 24px; }
+  .skills-layout { grid-template-columns: 1fr; gap: 40px; }
+  .cap-cols { grid-template-columns: 1fr; gap: 20px; }
+  .cap-col + .cap-col { border-left: 0; padding-left: 0; padding-top: 24px; }
+  .about-layout { grid-template-columns: 1fr; gap: 40px; }
+  .traits-cloud { height: 240px; }
+  .tp3 { left: 0; } .tp4 { right: 0; }
+  footer { padding: 18px 24px; }
+}
+@media (max-width: 640px) {
+  .about-big-heading { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .fan-card { width: 230px; height: 162px; border-radius: 14px; }
+  .fan-card[data-pos="-2"] { transform: translateX(-250px) translateY(26px) rotate(-8deg) scale(0.72); }
+  .fan-card[data-pos="-1"] { transform: translateX(-140px) translateY(8px) rotate(-4deg) scale(0.86); }
+  .fan-card[data-pos="1"]  { transform: translateX(140px) translateY(8px) rotate(4deg) scale(0.86); }
+  .fan-card[data-pos="2"]  { transform: translateX(250px) translateY(26px) rotate(8deg) scale(0.72); }
+  .fan-carousel { height: 235px; }
+  .cta-btns { flex-direction: column; align-items: center; }
+  .btn-solid, .btn-outline { width: 100%; text-align: center; padding: 13px 20px; }
+  footer { padding: 18px 20px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mob-overlay" id="mobMenu">
+  <button class="mob-close" id="mobClose">âœ•</button>
+  <a href="#work"    data-i18n="mob_work" onclick="closeMob()">Karya</a>
+  <a href="#skills"  data-i18n="mob_skills" onclick="closeMob()">Kemampuan</a>
+  <a href="#about"   data-i18n="mob_about" onclick="closeMob()">Tentang</a>
+  <a href="#contact" data-i18n="mob_contact" onclick="closeMob()">Kontak</a>
+</div>
+
+<!-- â•â•â• NAVBAR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<nav id="mainNav">
+  <div class="nav-brand">
+    <div class="nav-logo-box"><img id="navImg" src="assets/brand-logo.png" alt="Logo Teuku Al Jumanatul Ali"></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#work" data-i18n="nav_work">KARYA</a></li>
+    <li><a href="#skills" data-i18n="nav_skills">KEMAMPUAN</a></li>
+    <li><a href="#about" data-i18n="nav_about">TENTANG</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">KONTAK</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-sw" id="langSw" data-lang="id" role="group" aria-label="Bahasa / Language">
+      <span class="lang-pill"></span>
+      <button type="button" data-lang="id" class="active" aria-label="Bahasa Indonesia">ID</button>
+      <button type="button" data-lang="en" aria-label="English">EN</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" title="Ganti tema" aria-label="Ganti tema"></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Buka menu">â˜°</button>
+    <a href="#contact" class="hire-btn" data-i18n="hire">Rekrut Saya</a>
+  </div>
+</nav>
+
+<!-- â•â•â• HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section id="hero">
+  <div class="mq-wrap top">
+    <div class="mq-row fwd">
+      <span class="mq-txt">TEUKU AL JUMANATUL ALI &nbsp;&nbsp; </span>
+      <span class="mq-txt">TEUKU AL JUMANATUL ALI &nbsp;&nbsp; </span>
+      <span class="mq-txt">TEUKU AL JUMANATUL ALI &nbsp;&nbsp; </span>
+    </div>
+  </div>
+  <div class="mq-wrap bot">
+    <div class="mq-row rev">
+      <span class="mq-txt">WEB DEV Â· DATA VIZ Â· LOW CODE &nbsp;&nbsp; </span>
+      <span class="mq-txt">WEB DEV Â· DATA VIZ Â· LOW CODE &nbsp;&nbsp; </span>
+      <span class="mq-txt">WEB DEV Â· DATA VIZ Â· LOW CODE &nbsp;&nbsp; </span>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img id="heroImg" src="" alt="Teuku Al Jumanatul Ali">
+  </div>
+  <div class="scroll-down" data-i18n="scroll">Gulir ke Bawah</div>
+</section>
+
+<!-- â•â•â• WORK GALLERY â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section id="work">
+  <div class="work-header rv">
+    <div class="work-header-left">
+      <p class="eyebrow" data-i18n="work_eyebrow">Karya Pilihan</p>
+      <h2 class="sec-title work-title" style="margin-bottom:0"><span id="workTitleText" data-i18n="work_title">Galeri Karya</span><span id="cur" class="cursor-blink" aria-hidden="true">|</span></h2>
+      <p class="sec-sub-work" data-i18n="work_sub">Kumpulan sistem, aplikasi digital, dan karya teknis yang saya bangun.</p>
+    </div>
+    <a href="https://github.com/Teuku-all" class="view-more-btn" target="_blank"><span data-i18n="view_more">Lihat Proyek Lainnya</span><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+  </div>
+
+  <!-- FAN CAROUSEL -->
+  <div class="fan-carousel rv d1" id="fanCarousel" aria-roledescription="carousel" aria-label="Work gallery"></div>
+  <div class="fan-controls rv d1">
+    <button class="fan-arrow" id="fanPrev" aria-label="Sebelumnya"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m7 7-7-7 7-7"/></svg></button>
+    <div class="fan-dots" id="fanDots"></div>
+    <button class="fan-arrow" id="fanNext" aria-label="Berikutnya"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button>
+  </div>
+
+  <!-- Active project info -->
+  <div class="proj-info rv d2" id="projInfo">
+    <div class="proj-info-title" id="piTitle"></div>
+    <div class="proj-info-desc"  id="piDesc"></div>
+    <a href="https://github.com/Teuku-all" class="proj-info-link" target="_blank" rel="noopener noreferrer"><span data-i18n="view_project">Lihat Proyek</span><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+  </div>
+</section>
+
+<!-- â•â•â• WHAT I CAN DO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section id="skills">
+  <canvas class="contour-bg" id="contourBg" aria-hidden="true"></canvas>
+  <div class="skills-layout">
+    <div>
+      <p class="eyebrow rv" data-i18n="sk_eyebrow">Kemampuan Saya</p>
+      <h2 class="sec-title rv" data-i18n="sk_title">Yang Bisa<br>Saya Lakukan</h2>
+      <p class="rv" data-i18n="sk_intro" style="font-size:.84rem;color:var(--muted);line-height:1.7;max-width:240px;margin-top:8px">Menggabungkan skill teknis, kreativitas, dan problem-solving untuk membangun solusi digital yang berdampak.</p>
+      <div class="tech-grid rv d2">
+        <div class="tech-logo" role="img" tabindex="0" aria-label="HTML5"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 3 1.5 17L12 22l5.5-2L19 3H5Z"/><path d="M8 7h8l-.4 4H9l.3 3h6.1l-.4 4-3 .9-3-.9-.2-2"/></svg><span>HTML5</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="CSS3"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 3 1.5 17L12 22l5.5-2L19 3H5Z"/><path d="M8 7h8l-.3 3H9l.3 3h6l-.4 4-2.9.9-3-.9-.2-2"/></svg><span>CSS3</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="JavaScript"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 3h16v18H4z"/><path d="M10 10v6a2 2 0 0 1-4 0m8-1a2 2 0 0 0 4 0c0-2-4-2-4-4s4-2 4 0"/></svg><span>JavaScript</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="React"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg><span>React</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="Node.js"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m9 10 3-2 3 2v4l-3 2-3-2v-4Z"/></svg><span>Node.js</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="Python"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3H8a3 3 0 0 0-3 3v3h7v3H8a3 3 0 0 0-3 3v3a3 3 0 0 0 3 3h4v-7h4a3 3 0 0 0 3-3V7a4 4 0 0 0-4-4h-3Z"/><path d="M9 6h.01M15 18h.01"/></svg><span>Python</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="PHP"><svg aria-hidden="true" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="6"/><path d="m7 15 2-6h3l-2 6m3 0 2-6h3l-2 6m-5-2h5"/></svg><span>PHP</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="MySQL"><svg aria-hidden="true" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><span>MySQL</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="Tableau"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2v5m0 10v5M2 12h5m10 0h5M5 5l3 3m8 8 3 3m0-14-3 3m-8 8-3 3M9 12h6m-3-3v6"/></svg><span>Tableau</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="Power BI"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 20V11h4v9m2 0V5h4v15m2 0v-7h4v7M3 21h18"/></svg><span>Power BI</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="Bubble"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-6l-5 5v-5a3 3 0 0 1-3-3V5Z"/><path d="M8 8h9m-9 4h6"/></svg><span>Bubble</span></div>
+        <div class="tech-logo" role="img" tabindex="0" aria-label="Figma"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 3h6a3 3 0 0 1 0 6h-3v3h3a3 3 0 1 1-3 3v3a3 3 0 1 1-3-3h3v-3H9a3 3 0 0 1 0-6h3V3H9a3 3 0 0 1 0 6"/></svg><span>Figma</span></div>
+      </div>
+    </div>
+    <!-- right: 2 numbered columns -->
+    <div class="cap-cols">
+      <div class="cap-col rv">
+        <div class="cap-col-header">
+          <div class="cap-num">01</div>
+          <div class="cap-cat"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4M8 9l-2 2 2 2m8-4 2 2-2 2"/></svg><span data-i18n="cap1_cat">IT / Pengembangan<br>Web</span></div>
+        </div>
+        <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4M8 9l-2 2 2 2m8-4 2 2-2 2m-3-5-2 6"/></svg></div>
+        <div class="cap-desc" data-i18n="cap1_desc">Membangun sistem digital fungsional â€” dari web app berbasis database hingga antarmuka interaktif yang responsif dan cepat.</div>
+        <div class="cap-tags">
+          <span class="ctag">Web Development</span>
+          <span class="ctag">React.js</span>
+          <span class="ctag">JavaScript</span>
+          <span class="ctag">PHP</span>
+          <span class="ctag">MySQL</span>
+          <span class="ctag">HTML / CSS</span>
+          <span class="ctag">Node.js</span>
+        </div>
+      </div>
+      <div class="cap-col rv d1">
+        <div class="cap-col-header">
+          <div class="cap-num">02</div>
+          <div class="cap-cat"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg><span data-i18n="cap2_cat">Visualisasi Data &amp;<br>Low-code</span></div>
+        </div>
+        <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/><path d="M17 6h4v4"/></svg></div>
+        <div class="cap-desc" data-i18n="cap2_desc">Mengubah data mentah menjadi visual bermakna & membangun aplikasi dengan platform low-code modern secara efisien.</div>
+        <div class="cap-tags">
+          <span class="ctag">Tableau</span>
+          <span class="ctag">Power BI</span>
+          <span class="ctag">Python</span>
+          <span class="ctag">Chart.js</span>
+          <span class="ctag">Bubble.io</span>
+          <span class="ctag">Make.com</span>
+          <span class="ctag">Airtable</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- â•â•â• ABOUT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section id="about">
+  <p class="eyebrow rv" data-i18n="ab_eyebrow">Tentang Saya</p>
+  <h2 class="about-big-heading rv">
+    <span class="about-heading-track" aria-label="Problem Solver. Digital Generalist."><span class="about-heading-copy">Problem Solver. &nbsp; Digital Generalist. &nbsp; </span><span class="about-heading-copy" aria-hidden="true">Problem Solver. &nbsp; Digital Generalist. &nbsp; </span></span>
+  </h2>
+  <div class="about-layout">
+    <div>
+      <div class="about-profile rv">
+        <div class="about-avatar"><img id="aboutImg" src="" alt="Al"></div>
+        <div>
+          <div class="about-name">Teuku Al Jumanatul Ali </div>
+          <div class="about-sub"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m22 10-10-5L2 10l10 5 10-5Zm-16 2.5V17c3.5 3 8.5 3 12 0v-4.5M22 10v6"/></svg><span data-i18n="ab_sub">Informatika | Universitas Syiah Kuala</span></div>
+        </div>
+      </div>
+      <div class="about-stats-row rv d1">
+        <div><div class="about-stat-num">8+</div><div class="about-stat-label" data-i18n="st_projects">Proyek</div></div>
+        <div><div class="about-stat-num">3+</div><div class="about-stat-label" data-i18n="st_clients">Klien</div></div>
+        <div><div class="about-stat-num">2+</div><div class="about-stat-label" data-i18n="st_exp">Tahun Pengalaman</div></div>
+      </div>
+      <div class="about-bio rv d2">
+        <p data-i18n="bio1">Saya mahasiswa Informatika yang fokus pada <strong>web development, data visualization, dan low-code platform</strong>. Saya menikmati mengubah masalah nyata menjadi solusi digital yang praktis dan berdampak.</p>
+        <br>
+        <p data-i18n="bio2">Pengalaman saya mencakup sistem berbasis data, dashboard interaktif, hingga aplikasi low-code siap pakai.</p>
+        <br>
+        <p data-i18n="bio3">Ingin tahu lebih? <a href="mailto:t.al.jumanatul.ali53@gmail.com">Hubungi saya langsung.</a></p>
+      </div>
+      <div class="currently-bar rv d3">
+        <div class="curr-item"><span class="curr-icon"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m8 8-4 4 4 4m8-8 4 4-4 4m-3-10-2 12"/></svg></span><div><span class="curr-label" data-i18n="cur1_l">Sedang Membangun</span><span data-i18n="cur1_v">Proyek web & data</span></div></div>
+        <div class="curr-item"><span class="curr-icon"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></span><div><span class="curr-label" data-i18n="cur2_l">Menjelajahi</span><span data-i18n="cur2_v">AI & otomasi</span></div></div>
+        <div class="curr-item"><span class="curr-icon"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span><div><span class="curr-label" data-i18n="cur3_l">Mempelajari</span><span data-i18n="cur3_v">Pengembangan full-stack</span></div></div>
+      </div>
+    </div>
+    <div class="rv d1">
+      <div class="traits-cloud">
+        <div class="trait-pill tp1"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18h1a2 2 0 0 0 1.7-3.1 1.5 1.5 0 0 1 1.3-2.3H18a3 3 0 0 0 3-3c0-5.3-4-9.6-9-9.6Z"/><path d="M7.5 10h.01M12 7h.01M16.5 10h.01"/></svg><span data-i18n="t1">Kreatif</span></div>
+        <div class="trait-pill tp2"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg><span data-i18n="t2">Analitis</span></div>
+        <div class="trait-pill tp3"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m13 2-3 8h7l-6 12 1-9H5l8-11Z"/></svg><span data-i18n="t3">Cepat Belajar</span></div>
+        <div class="trait-pill tp4"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span data-i18n="t4">Teliti</span></div>
+        <div class="trait-pill tp5"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2 3 7l9 5 9-5-9-5Zm-9 10 9 5 9-5M3 17l9 5 9-5"/></svg><span data-i18n="t5">Pemecah Masalah</span></div>
+        <div class="trait-pill tp6"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10" cy="7" r="4"/><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m12-14a4 4 0 0 1 0 7.75M20 21v-2a4 4 0 0 0-3-3.87"/></svg><span data-i18n="t6">Suka Kolaborasi</span></div>
+        <div class="trait-pill tp7"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg><span data-i18n="t7">Terorganisir</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- â•â•â• CONTACT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section id="contact">
+  <div class="cta-wrap rv">
+    <p class="eyebrow" data-i18n="ct_eyebrow" style="display:flex;justify-content:center">Hubungi Saya</p>
+    <h2 class="cta-title" data-i18n="ct_title">Punya proyek<br>di pikiran?</h2>
+    <p class="cta-sub" data-i18n="ct_sub">Terbuka untuk kolaborasi, freelance, dan diskusi ide.<br>Respons dalam 24 jam, mari wujudkan sesuatu yang luar biasa.</p>
+    <div class="cta-btns">
+      <a href="mailto:t.al.jumanatul.ali53@gmail.com" class="btn-solid"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span data-i18n="ct_email">Kirim Email</span></a>
+      <a href="https://wa.me/6282162934592" class="btn-outline" target="_blank"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/></svg><span>WhatsApp</span></a>
+      <a href="https://github.com/Teuku-all" class="btn-outline" target="_blank"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 6v-3.9a3.4 3.4 0 0 0-.9-2.7c3-.3 6.1-1.5 6.1-6.7A5.2 5.2 0 0 0 18.8 5a4.8 4.8 0 0 0-.1-3.5S17.5 1.2 15 3a13.4 13.4 0 0 0-7 0C5.5 1.2 4.3 1.5 4.3 1.5A4.8 4.8 0 0 0 4.2 5a5.2 5.2 0 0 0-1.4 3.7c0 5.2 3.1 6.4 6.1 6.7A3.4 3.4 0 0 0 8 18.1V22"/></svg><span>GitHub</span><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-copy"><span data-i18n="foot">&copy; 2026 Teuku Al Jumanatul Ali &mdash; Dibuat dengan sepenuh hati</span><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg></div>
+  <div class="foot-links">
+    <a href="mailto:t.al.jumanatul.ali53@gmail.com">Email</a>
+    <a href="https://wa.me/6282162934592" target="_blank">WhatsApp</a>
+    <a href="https://github.com/Teuku-all" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+/* â”€â”€â”€ PHOTOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+const PHOTO_NOBG = 'assets/hero-profile.png';
+const PHOTO_ORIG = 'assets/about-photo.jpg';
+document.getElementById('heroImg').src  = PHOTO_NOBG;
+document.getElementById('aboutImg').src = PHOTO_ORIG;
+
+/* â”€â”€â”€ PROJECT DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+const GALLERY_PHOTO = 'data:image/webp;base64,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';
+/* tiap proyek bisa punya screenshot sendiri: tambahkan  img:'url-gambar'  */
+const projects = [
+  { label:'Data Viz', icon:'chart', img:'assets/work-dummy-analytics.svg',   c1:'#3b5bdb', c2:'#101a4d', zoom:1,    shift:'0%',
+    t:{ id:{ title:'Dashboard Analytics E-Commerce',   desc:'Visualisasi performa penjualan, tren produk, dan perilaku pelanggan secara real-time untuk pengambilan keputusan berbasis data.' },
+        en:{ title:'E-Commerce Analytics Dashboard',   desc:'Real-time visualization of sales performance, product trends, and customer behavior to support data-driven decisions.' } } },
+  { label:'Web App',  icon:'globe', img:'assets/work-dummy-webapp.svg',   c1:'#0ca678', c2:'#07281f', zoom:1.04, shift:'-2%',
+    t:{ id:{ title:'Sistem Manajemen Data Mahasiswa',  desc:'Aplikasi full-stack untuk pengelolaan data akademik, jadwal, dan pelaporan otomatis dengan antarmuka yang intuitif.' },
+        en:{ title:'Student Data Management System',   desc:'A full-stack application for managing academic data, schedules, and automated reporting with an intuitive interface.' } } },
+  { label:'Low-code', icon:'bolt', img:'assets/work-dummy-lowcode.svg',    c1:'#f08c00', c2:'#3a2200', zoom:1,    shift:'2%',
+    t:{ id:{ title:'Aplikasi Inventory Low-code',      desc:'Sistem manajemen stok berbasis Bubble.io dan Make.com â€” dari ide ke produksi dalam hitungan hari, bukan bulan.' },
+        en:{ title:'Low-code Inventory App',           desc:'A stock management system built on Bubble.io and Make.com â€” from idea to production in days, not months.' } } },
+  { label:'Data Viz', icon:'chart', img:'assets/work-dummy-dataviz.svg',   c1:'#ae3ec9', c2:'#2a0f33', zoom:1.04, shift:'0%',
+    t:{ id:{ title:'Visualisasi Data Sensus Penduduk', desc:'Peta interaktif dan grafik tren demografis untuk mendukung riset sosial dan pengambilan kebijakan berbasis data.' },
+        en:{ title:'Population Census Data Visualization', desc:'Interactive maps and demographic trend charts to support social research and data-driven policy making.' } } },
+  { label:'Mobile App', icon:'phone', img:'assets/work-dummy-mobile.svg', c1:'#e03131', c2:'#330c0c', zoom:1,    shift:'-2%',
+    t:{ id:{ title:'Aplikasi Mobile Manajemen Tugas',  desc:'Aplikasi mobile lintas platform untuk manajemen tugas harian dengan notifikasi cerdas dan UI yang bersih.' },
+        en:{ title:'Task Management Mobile App',       desc:'A cross-platform mobile app for daily task management with smart notifications and a clean UI.' } } },
+  { label:'Math Game', icon:'math', img:'assets/work-solvox.svg', url:'https://solvoxweb.vercel.app/', c1:'#5b5ce2', c2:'#171942', zoom:1, shift:'0%',
+    t:{ id:{ title:'Solvox — Game Matematika Berbasis Web', desc:'Game web interaktif bertema matematika yang mengemas latihan berhitung menjadi pengalaman bermain.' },
+        en:{ title:'Solvox — Web-Based Math Game', desc:'An interactive web game built around mathematics, turning calculation practice into a playful experience.' } } },
+];
+let lang = 'id';
+try { const sv = localStorage.getItem('lang'); if (sv === 'en' || sv === 'id') lang = sv; } catch (e) {}
+
+/* â”€â”€â”€ SLIDE CAROUSEL (kartu persisten â†’ transisi CSS halus) â”€â”€â”€ */
+const carousel = document.getElementById('fanCarousel');
+const dotsEl   = document.getElementById('fanDots');
+const info     = document.getElementById('projInfo');
+const piTitle  = document.getElementById('piTitle');
+const piDesc   = document.getElementById('piDesc');
+const total    = projects.length;
+let current = 0, infoTimer, autoTimer;
+
+const projectIcons = {
+  chart: '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg>',
+  globe: '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>',
+  bolt: '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m13 2-3 8h7l-6 12 1-9H5l8-11Z"/></svg>',
+  phone: '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>',
+  math: '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 17h.01M12 17h.01M16 17h.01"/></svg>'
+};
+const cards = projects.map((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'fan-card';
+  card.style.setProperty('--c1', p.c1);
+  card.style.setProperty('--c2', p.c2);
+  card.style.setProperty('--zoom', p.zoom || 1);
+  card.style.setProperty('--shift', p.shift || '0%');
+  card.innerHTML = `<div class="fan-card-inner">
+      <span class="fan-card-label">${projectIcons[p.icon]}${p.label}</span>
+      <img src="${p.img || GALLERY_PHOTO}" alt="${p.t.id.title}" draggable="false">
+    </div>`;
+  card.addEventListener('click', () => { if (!dragMoved && i !== current) goTo(i, true); });
+  carousel.appendChild(card);
+  return card;
+});
+const dots = projects.map((p, i) => {
+  const d = document.createElement('button');
+  d.className = 'fan-dot';
+  d.setAttribute('aria-label', 'Proyek ' + (i + 1));
+  d.addEventListener('click', () => goTo(i, true));
+  dotsEl.appendChild(d);
+  return d;
+});
+
+function offsetOf(i) {                 // offset sirkular terpendek terhadap kartu aktif
+  let o = ((i - current) % total + total) % total;
+  if (o > total / 2) o -= total;
+  return o;
+}
+
+function layout(first) {
+  cards.forEach((card, i) => {
+    const o = offsetOf(i);
+    const pos = Math.abs(o) <= 2 ? String(o) : 'hidden';
+    const prev = card.dataset.pos;
+    const wrapped = !first && prev !== undefined && prev !== 'hidden' && pos !== 'hidden'
+                    && Math.abs(Number(pos) - Number(prev)) > 2;
+    const cameFromHidden = !first && prev === 'hidden' && pos !== 'hidden';
+    if (wrapped || cameFromHidden) {   // loncat ke sisi seberang â†’ muncul dengan fade, bukan menyeberang layar
+      card.style.transition = 'none';
+      card.style.opacity = '0';
+      card.dataset.pos = pos;
+      card.getBoundingClientRect();
+      card.style.transition = '';
+      card.style.opacity = '';
+    } else {
+      card.dataset.pos = pos;
+    }
+    card.setAttribute('aria-hidden', pos === '0' ? 'false' : 'true');
+  });
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+function updateInfo(immediate) {
+  clearTimeout(infoTimer);
+  const T = projects[current].t[lang];
+  const apply = () => {
+    piTitle.textContent = T.title;
+    piDesc.textContent = T.desc;
+    document.querySelector('.proj-info-link').href = projects[current].url || 'https://github.com/Teuku-all';
+    info.classList.remove('swap');
+  };
+  if (immediate) return apply();
+  info.classList.add('swap');
+  infoTimer = setTimeout(apply, 260);
+}
+
+function goTo(i, user) {
+  current = ((i % total) + total) % total;
+  layout(false);
+  updateInfo(false);
+  if (user) restartAuto();
+}
+const next = user => goTo(current + 1, user);
+const prev = user => goTo(current - 1, user);
+
+document.getElementById('fanNext').addEventListener('click', () => next(true));
+document.getElementById('fanPrev').addEventListener('click', () => prev(true));
+
+/* swipe / drag */
+let dragX = null, dragMoved = false;
+carousel.addEventListener('pointerdown', e => { dragX = e.clientX; dragMoved = false; carousel.classList.add('dragging'); });
+window.addEventListener('pointermove', e => { if (dragX !== null && Math.abs(e.clientX - dragX) > 8) dragMoved = true; });
+window.addEventListener('pointerup', e => {
+  if (dragX === null) return;
+  const dx = e.clientX - dragX; dragX = null;
+  carousel.classList.remove('dragging');
+  if (Math.abs(dx) > 45) (dx < 0 ? next : prev)(true);
+  setTimeout(() => dragMoved = false, 0);
+});
+window.addEventListener('pointercancel', () => { dragX = null; carousel.classList.remove('dragging'); });
+
+/* keyboard (saat galeri terlihat) */
+let galleryVisible = false;
+new IntersectionObserver(es => { galleryVisible = es[0].isIntersecting; galleryVisible ? restartAuto() : clearTimeout(autoTimer); },
+  { threshold: .35 }).observe(carousel);
+window.addEventListener('keydown', e => {
+  if (!galleryVisible) return;
+  if (e.key === 'ArrowRight') next(true);
+  if (e.key === 'ArrowLeft')  prev(true);
+});
+
+/* autoplay lembut â€” berhenti saat hover / tab tidak aktif */
+let hovering = false;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function restartAuto() {
+  clearTimeout(autoTimer);
+  if (reduce || !galleryVisible) return;
+  autoTimer = setTimeout(() => { if (!hovering && !document.hidden) next(false); restartAuto(); }, 5000);
+}
+carousel.addEventListener('mouseenter', () => hovering = true);
+carousel.addEventListener('mouseleave', () => hovering = false);
+
+layout(true);
+updateInfo(true);
+
+/* â”€â”€â”€ THEME: transisi lingkaran halus (View Transitions) â”€â”€â”€ */
+const themeBtn = document.getElementById('themeBtn');
+const root = document.documentElement;
+function applyTheme(t) {
+  root.dataset.theme = t;
+  themeBtn.innerHTML = t === 'dark' ? '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>' : '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/></svg>';
+  try { localStorage.setItem('theme', t); } catch (e) {}
+}
+(function initTheme() {
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  applyTheme(saved === 'light' ? 'light' : 'dark');
+})();
+
+let themeBusy = false;
+themeBtn.addEventListener('click', () => {
+  if (themeBusy) return;
+  const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  const r = themeBtn.getBoundingClientRect();
+  const x = r.left + r.width / 2, y = r.top + r.height / 2;
+  const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+
+  if (!document.startViewTransition || reduce) {          // fallback: fade warna halus
+    root.classList.add('theme-fade');
+    applyTheme(nextTheme);
+    setTimeout(() => root.classList.remove('theme-fade'), 650);
+    return;
+  }
+  themeBusy = true;
+  const vt = document.startViewTransition(() => applyTheme(nextTheme));
+  vt.ready.then(() => {
+    root.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+      { duration: 750, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' }
+    );
+  }).catch(() => {});
+  vt.finished.finally(() => { themeBusy = false; });
+});
+
+/* â”€â”€â”€ KONTUR TOPOGRAFI INTERAKTIF (What I Can Do) â”€â”€â”€â”€ */
+(function contourBg() {
+  const sec = document.getElementById('skills');
+  const cv  = document.getElementById('contourBg');
+  if (!sec || !cv) return;
+  const ctx = cv.getContext('2d');
+
+  /* noise Perlin dengan seed tetap */
+  const rnd = (a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; })(11);
+  const perm = [...Array(256).keys()];
+  for (let i = 255; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [perm[i], perm[j]] = [perm[j], perm[i]]; }
+  const P = new Uint8Array(512); for (let i = 0; i < 512; i++) P[i] = perm[i & 255];
+  const G = [[1,1],[-1,1],[1,-1],[-1,-1],[1,0],[-1,0],[0,1],[0,-1]];
+  const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
+  const dot = (h, x, y) => { const g = G[h & 7]; return g[0] * x + g[1] * y; };
+  function pn(x, y) {
+    const X = Math.floor(x), Y = Math.floor(y), xf = x - X, yf = y - Y, xi = X & 255, yi = Y & 255;
+    const aa = P[P[xi] + yi], ab = P[P[xi] + yi + 1], ba = P[P[xi + 1] + yi], bb = P[P[xi + 1] + yi + 1];
+    const u = fade(xf), v = fade(yf);
+    const x1 = dot(aa, xf, yf) + u * (dot(ba, xf - 1, yf) - dot(aa, xf, yf));
+    const x2 = dot(ab, xf, yf - 1) + u * (dot(bb, xf - 1, yf - 1) - dot(ab, xf, yf - 1));
+    return x1 + v * (x2 - x1);
+  }
+  const field = (x, y) => 6.2 * pn(x / 540 + 2.3, y / 540 + 7.1) + 2.3 * pn(x / 240 + 11.7, y / 240 + 3.3) + 0.6 * pn(x / 100 + 5.1, y / 100 + 19.2);
+
+  let w = 0, h = 0, dpr = 1, n = 0;
+  let rx, ry, dx, dy, vx, vy;
+  let color = '#fff', alpha = .13;
+
+  function readColors() {
+    const cs = getComputedStyle(document.documentElement);
+    color = cs.getPropertyValue('--text').trim() || '#fff';
+    alpha = parseFloat(cs.getPropertyValue('--wave-op')) || .13;
+  }
+
+  /* marching squares â†’ segmen garis kontur */
+  function build() {
+    w = sec.clientWidth; h = sec.clientHeight; dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    const cell = 10, nx = Math.ceil(w / cell) + 1, ny = Math.ceil(h / cell) + 1, STEP = .3;
+    const F = new Float32Array(nx * ny);
+    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) F[j * nx + i] = field(i * cell, j * cell);
+    const xs = [], ys = [];
+    const seg = (a, b, c, d) => { xs.push(a, c); ys.push(b, d); };
+    for (let j = 0; j < ny - 1; j++) for (let i = 0; i < nx - 1; i++) {
+      const a = F[j * nx + i], b = F[j * nx + i + 1], c = F[(j + 1) * nx + i + 1], d = F[(j + 1) * nx + i];
+      const k0 = Math.ceil(Math.min(a, b, c, d) / STEP), k1 = Math.floor(Math.max(a, b, c, d) / STEP);
+      if (k1 < k0) continue;
+      const x = i * cell, y = j * cell;
+      for (let k = k0; k <= k1; k++) {
+        const L = k * STEP + 1e-4;
+        const idx = (a > L ? 8 : 0) | (b > L ? 4 : 0) | (c > L ? 2 : 0) | (d > L ? 1 : 0);
+        if (idx === 0 || idx === 15) continue;
+        const tx = x + cell * (L - a) / (b - a), ty = y;
+        const rx_ = x + cell, ry_ = y + cell * (L - b) / (c - b);
+        const bx = x + cell * (L - d) / (c - d), by = y + cell;
+        const lx = x, ly = y + cell * (L - a) / (d - a);
+        switch (idx) {
+          case 1: case 14: seg(lx, ly, bx, by); break;
+          case 2: case 13: seg(bx, by, rx_, ry_); break;
+          case 3: case 12: seg(lx, ly, rx_, ry_); break;
+          case 4: case 11: seg(tx, ty, rx_, ry_); break;
+          case 6: case 9:  seg(tx, ty, bx, by); break;
+          case 7: case 8:  seg(tx, ty, lx, ly); break;
+          case 5:  if ((a + b + c + d) / 4 > L) { seg(tx, ty, lx, ly); seg(bx, by, rx_, ry_); } else { seg(tx, ty, rx_, ry_); seg(lx, ly, bx, by); } break;
+          case 10: if ((a + b + c + d) / 4 > L) { seg(tx, ty, rx_, ry_); seg(lx, ly, bx, by); } else { seg(tx, ty, lx, ly); seg(bx, by, rx_, ry_); } break;
+        }
+      }
+    }
+    n = xs.length;
+    rx = Float32Array.from(xs); ry = Float32Array.from(ys);
+    dx = new Float32Array(n); dy = new Float32Array(n); vx = new Float32Array(n); vy = new Float32Array(n);
+    readColors(); draw();
+  }
+
+  function draw() {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = 1.15; ctx.lineCap = 'round';
+    ctx.beginPath();
+    for (let i = 0; i < n; i += 2) {
+      ctx.moveTo(rx[i] + dx[i], ry[i] + dy[i]);
+      ctx.lineTo(rx[i + 1] + dx[i + 1], ry[i + 1] + dy[i + 1]);
+    }
+    ctx.stroke();
+  }
+
+  /* fisika: garis terdorong menjauhi kursor, lalu bergoyang kembali (pegas) */
+  const R = 170, SPREAD = .85, K = .055, C = .15;
+  const ptr = { x: 0, y: 0, active: false, mx: 0, my: 0, lx: null, ly: null };
+  let raf = 0, last = 0;
+
+  function tick(t) {
+    const f = Math.min(2, (t - last) / 16.67 || 1); last = t;
+    const R2 = R * R, mdx = Math.max(-60, Math.min(60, ptr.mx)), mdy = Math.max(-60, Math.min(60, ptr.my));
+    const pointerMoving = Math.abs(ptr.mx) + Math.abs(ptr.my) > .01;
+    let energy = 0;
+    for (let i = 0; i < n; i++) {
+      let tx = 0, ty = 0, ix = 0, iy = 0;
+      if (ptr.active) {
+        const ox = rx[i] - ptr.x, oy = ry[i] - ptr.y, d2 = ox * ox + oy * oy;
+        if (d2 < R2) {
+          const d = Math.sqrt(d2) || 1, wgt = 1 - d / R, g = wgt * wgt;
+          tx = ox * g * SPREAD; ty = oy * g * SPREAD;
+          ix = mdx * g * .09; iy = mdy * g * .09;
+        }
+      }
+      vx[i] += ((tx - dx[i]) * K - vx[i] * C + ix) * f;
+      vy[i] += ((ty - dy[i]) * K - vy[i] * C + iy) * f;
+      dx[i] += vx[i] * f; dy[i] += vy[i] * f;
+      const e = Math.abs(tx - dx[i]) + Math.abs(ty - dy[i]) + Math.abs(vx[i]) + Math.abs(vy[i]);
+      if (e > energy) energy = e;
+    }
+    ptr.mx = ptr.my = 0;
+    draw();
+    if ((ptr.active && pointerMoving) || energy > .04) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      raf = 0;
+      if (!ptr.active) {
+        dx.fill(0); dy.fill(0); vx.fill(0); vy.fill(0);
+        draw();
+      }
+    }
+  }
+  const wake = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } };
+
+  if (!reduce) {
+    sec.addEventListener('pointermove', e => {
+      const r = sec.getBoundingClientRect();
+      ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.active = true;
+      if (ptr.lx !== null) { ptr.mx += ptr.x - ptr.lx; ptr.my += ptr.y - ptr.ly; }
+      ptr.lx = ptr.x; ptr.ly = ptr.y; wake();
+    }, { passive: true });
+    const leave = () => { ptr.active = false; ptr.lx = ptr.ly = null; wake(); };
+    sec.addEventListener('pointerleave', leave);
+    sec.addEventListener('pointercancel', leave);
+    sec.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') leave(); });
+  }
+
+  /* tema berubah â†’ warna garis ikut berubah */
+  new MutationObserver(() => { readColors(); draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  /* ukuran berubah â†’ bangun ulang */
+  let rt; let lw = 0, lh = 0;
+  new ResizeObserver(() => {
+    if (Math.abs(sec.clientWidth - lw) < 2 && Math.abs(sec.clientHeight - lh) < 2) return;
+    clearTimeout(rt); rt = setTimeout(() => { lw = sec.clientWidth; lh = sec.clientHeight; build(); }, 140);
+  }).observe(sec);
+  lw = sec.clientWidth; lh = sec.clientHeight; build();
+})();
+
+/* â”€â”€â”€ BAHASA ID / EN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+const I18N = {
+  id: {
+    nav_work:`KARYA`, nav_skills:`KEMAMPUAN`, nav_about:`TENTANG`, nav_contact:`KONTAK`, hire:`Rekrut Saya`,
+    mob_work:`Karya`, mob_skills:`Kemampuan`, mob_about:`Tentang`, mob_contact:`Kontak`, scroll:`Gulir ke Bawah`,
+    work_eyebrow:`Karya Pilihan`, work_title:`Galeri Karya`,
+    work_sub:`Kumpulan sistem, aplikasi digital, dan karya teknis yang saya bangun.`,
+    view_more:`Lihat Proyek Lainnya`, view_project:`Lihat Proyek`,
+    sk_eyebrow:`Kemampuan Saya`, sk_title:`Yang Bisa<br>Saya Lakukan`,
+    sk_intro:`Menggabungkan skill teknis, kreativitas, dan problem-solving untuk membangun solusi digital yang berdampak.`,
+    cap1_cat:`IT / Pengembangan<br>Web`,
+    cap1_desc:`Membangun sistem digital fungsional â€” dari web app berbasis database hingga antarmuka interaktif yang responsif dan cepat.`,
+    cap2_cat:`Visualisasi Data &<br>Low-code`,
+    cap2_desc:`Mengubah data mentah menjadi visual bermakna & membangun aplikasi dengan platform low-code modern secara efisien.`,
+    ab_eyebrow:`Tentang Saya`, ab_sub:`Informatika | Universitas Syiah Kuala`,
+    st_projects:`Proyek`, st_clients:`Klien`, st_exp:`Tahun Pengalaman`,
+    bio1:`Saya mahasiswa Informatika yang fokus pada <strong>web development, data visualization, dan low-code platform</strong>. Saya menikmati mengubah masalah nyata menjadi solusi digital yang praktis dan berdampak.`,
+    bio2:`Pengalaman saya mencakup sistem berbasis data, dashboard interaktif, hingga aplikasi low-code siap pakai.`,
+    bio3:`Ingin tahu lebih? <a href="mailto:t.al.jumanatul.ali53@gmail.com">Hubungi saya langsung.</a>`,
+    cur1_l:`Sedang Membangun`, cur1_v:`Proyek web & data`, cur2_l:`Menjelajahi`, cur2_v:`AI & otomasi`, cur3_l:`Mempelajari`, cur3_v:`Pengembangan full-stack`,
+    t1:`Kreatif`, t2:`Analitis`, t3:`Cepat Belajar`, t4:`Teliti`, t5:`Pemecah Masalah`, t6:`Suka Kolaborasi`, t7:`Terorganisir`,
+    ct_eyebrow:`Hubungi Saya`, ct_title:`Punya proyek<br>di pikiran?`,
+    ct_sub:`Terbuka untuk kolaborasi, freelance, dan diskusi ide.<br><svg class="ui-icon cta-response-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Respons dalam 24 jam â€” mari wujudkan sesuatu yang luar biasa.`,
+    ct_email:`Kirim Email`, foot:`&copy; 2026 Teuku Al Jumanatul Ali &mdash; Dibuat dengan sepenuh hati`
+  },
+  en: {
+    nav_work:`WORK`, nav_skills:`WHAT I CAN DO`, nav_about:`ABOUT`, nav_contact:`CONTACT`, hire:`Hire Me`,
+    mob_work:`Work`, mob_skills:`What I Can Do`, mob_about:`About`, mob_contact:`Contact`, scroll:`Scroll Down`,
+    work_eyebrow:`Selected Work`, work_title:`Work Gallery`,
+    work_sub:`A collection of systems, digital applications, and technical work I've built.`,
+    view_more:`View More Projects`, view_project:`View Project`,
+    sk_eyebrow:`My Capabilities`, sk_title:`What I<br>Can Do`,
+    sk_intro:`Combining technical skills, creativity, and problem-solving to build digital solutions that make an impact.`,
+    cap1_cat:`IT / Web Development`,
+    cap1_desc:`Building functional digital systems â€” from database-driven web apps to responsive, fast interactive interfaces.`,
+    cap2_cat:`Data Visualization &<br>Low-code`,
+    cap2_desc:`Turning raw data into meaningful visuals & building applications efficiently with modern low-code platforms.`,
+    ab_eyebrow:`About Me`, ab_sub:`Informatics | Syiah Kuala University`,
+    st_projects:`Projects`, st_clients:`Clients`, st_exp:`Years Exp.`,
+    bio1:`I'm an Informatics student focused on <strong>web development, data visualization, and low-code platforms</strong>. I enjoy turning real-world problems into practical, impactful digital solutions.`,
+    bio2:`My experience spans data-driven systems, interactive dashboards, and ready-to-use low-code applications.`,
+    bio3:`Want to know more? <a href="mailto:t.al.jumanatul.ali53@gmail.com">Contact me directly.</a>`,
+    cur1_l:`Building`, cur1_v:`Web & data projects`, cur2_l:`Exploring`, cur2_v:`AI & automation`, cur3_l:`Learning`, cur3_v:`Full-stack dev`,
+    t1:`Creative`, t2:`Analytical`, t3:`Fast Learner`, t4:`Detail-Oriented`, t5:`Problem Solver`, t6:`Collaborative`, t7:`Organized`,
+    ct_eyebrow:`Get In Touch`, ct_title:`Got a project<br>in mind?`,
+    ct_sub:`Open to collaboration, freelance work, and idea discussions.<br><svg class="ui-icon cta-response-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>I reply within 24 hours â€” let's build something great.`,
+    ct_email:`Send Email`, foot:`&copy; 2026 Teuku Al Jumanatul Ali &mdash; Made with care`
+  }
+};
+const langSw = document.getElementById('langSw');
+function applyLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  langSw.dataset.lang = l;
+  langSw.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = I18N[l][el.dataset.i18n];
+    if (v !== undefined) el.innerHTML = v;
+  });
+  updateInfo(true);
+  try { localStorage.setItem('lang', l); } catch (e) {}
+}
+function setLang(l) {
+  if (l === lang) return;
+  if (!document.startViewTransition || reduce) return applyLang(l);
+  root.classList.add('lang-vt');
+  const vt = document.startViewTransition(() => applyLang(l));
+  vt.finished.finally(() => root.classList.remove('lang-vt'));
+}
+langSw.querySelectorAll('button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+applyLang(lang);
+
+/* Type the gallery heading once, the first time it enters the viewport. */
+const workTitle = document.getElementById('workTitleText');
+let workTitleTyped = false;
+const workTitleObserver = new IntersectionObserver(([entry]) => {
+  if (!entry.isIntersecting || workTitleTyped) return;
+  workTitleTyped = true;
+  workTitleObserver.disconnect();
+
+  if (reduce) return;
+  const titleLanguage = lang;
+  const title = workTitle.textContent.trim();
+  let index = 0;
+  workTitle.textContent = '';
+
+  function typeWorkTitle() {
+    if (titleLanguage !== lang) return;
+    workTitle.textContent = title.slice(0, ++index);
+    if (index < title.length) setTimeout(typeWorkTitle, 58);
+  }
+
+  typeWorkTitle();
+}, { threshold: .65 });
+workTitleObserver.observe(workTitle);
+
+/* â”€â”€â”€ MOBILE MENU â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+document.getElementById('menuBtn').addEventListener('click', () =>
+  document.getElementById('mobMenu').classList.add('open'));
+document.getElementById('mobClose').addEventListener('click', () =>
+  document.getElementById('mobMenu').classList.remove('open'));
+function closeMob() { document.getElementById('mobMenu').classList.remove('open'); }
+
+/* â”€â”€â”€ SCROLL REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function typeHeadingOnceOnReveal(heading) {
+  let hasTyped = false;
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting || hasTyped) return;
+    hasTyped = true;
+    observer.disconnect();
+    if (reduce) return;
+    const languageAtStart = lang;
+    const parts = heading.innerHTML.match(/<br\s*\/?\s*>|[^<]+/gi) || [];
+    heading.innerHTML = '';
+    let partIndex = 0, charIndex = 0;
+    const typeNext = () => {
+      if (languageAtStart !== lang || partIndex >= parts.length) return;
+      const part = parts[partIndex];
+      if (/^<br/i.test(part)) {
+        heading.insertAdjacentHTML('beforeend', '<br>');
+        partIndex++; charIndex = 0;
+      } else {
+        const chars = Array.from(part);
+        heading.append(document.createTextNode(chars[charIndex++]));
+        if (charIndex >= chars.length) { partIndex++; charIndex = 0; }
+      }
+      if (partIndex < parts.length) setTimeout(typeNext, 48);
+    };
+    typeNext();
+  }, { threshold: 0.2 });
+  observer.observe(heading);
+}
+document.querySelectorAll('.sec-title.rv').forEach(typeHeadingOnceOnReveal);
+
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -28px 0px' });
+document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+setTimeout(() => {
+  document.querySelectorAll('#hero .rv').forEach(el => el.classList.add('in'));
+}, 200);
+
+/* â”€â”€â”€ TYPING ANIMATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€â”€ NAV SHRINK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+const nav = document.getElementById('mainNav');
+let navUpdatePending = false;
+
+function updateNavState() {
+  nav.classList.toggle('is-compact', window.scrollY > 60);
+  navUpdatePending = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (navUpdatePending) return;
+  navUpdatePending = true;
+  requestAnimationFrame(updateNavState);
+}, { passive: true });
+updateNavState();
+
+document.addEventListener('visibilitychange', () => {
+  document.documentElement.classList.toggle('motion-paused', document.hidden);
+  if (!document.hidden) restartAuto();
+});
+</script>
+</body>
+</html>
