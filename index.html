@@ -912,6 +912,33 @@ footer {
   .work-header-left, .sec-sub-work { min-width: 0; max-width: 100%; }
   .view-more-btn { max-width: 100%; white-space: normal; }
   .about-big-heading { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .traits-cloud {
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 10px;
+    row-gap: 24px;
+  }
+  .traits-cloud .trait-pill {
+    position: relative;
+    inset: auto;
+    min-width: 0;
+    min-height: 44px;
+    padding: 9px 10px;
+    justify-content: flex-start;
+    white-space: normal;
+    animation: ft 4s ease-in-out infinite;
+    transform: none;
+  }
+  .traits-cloud .tp7 { animation: ft 4s ease-in-out 1.2s infinite; }
+  .traits-cloud .tp1 { animation-delay: 0s; }
+  .traits-cloud .tp2 { animation-delay: .5s; }
+  .traits-cloud .tp3 { animation-delay: 1s; }
+  .traits-cloud .tp4 { animation-delay: 1.5s; }
+  .traits-cloud .tp5 { animation-delay: 2s; }
+  .traits-cloud .tp6 { animation-delay: 2.5s; }
+  .traits-cloud .trait-pill span { min-width: 0; }
+  .traits-cloud .tp7 { grid-column: 1 / -1; justify-self: center; min-width: 44%; }
   .fan-card { width: 230px; height: 162px; border-radius: 14px; }
   .fan-card[data-pos="-2"] { transform: translateX(-250px) translateY(26px) rotate(-8deg) scale(0.72); }
   .fan-card[data-pos="-1"] { transform: translateX(-140px) translateY(8px) rotate(-4deg) scale(0.86); }
@@ -1339,7 +1366,7 @@ themeBtn.addEventListener('click', () => {
   const x = r.left + r.width / 2, y = r.top + r.height / 2;
   const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
 
-  if (!document.startViewTransition || reduce) {          // fallback: fade warna halus
+  if (!document.startViewTransition || reduce || matchMedia('(max-width: 720px), (pointer: coarse)').matches) {
     root.classList.add('theme-fade');
     applyTheme(nextTheme);
     setTimeout(() => root.classList.remove('theme-fade'), 650);
