@@ -46,6 +46,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px);
   scroll-padding-bottom: 24px;
+  overflow-x: clip;
 }
 body {
   background: var(--bg);
@@ -53,7 +54,7 @@ body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -199,8 +200,8 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
 }
+.menu-btn .ui-icon { width: 20px; height: 20px; }
 /* mobile overlay */
 .mob-overlay {
   display: none;
@@ -539,7 +540,7 @@ section { padding: 90px 48px; position: relative; }
 #skills { background: var(--bg2); }
 .skills-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
   gap: 80px;
   align-items: start;
 }
@@ -591,7 +592,7 @@ section { padding: 90px 48px; position: relative; }
 /* right side: numbered columns persis referensi */
 .cap-cols {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 32px;
 }
 .cap-col {}
@@ -635,11 +636,15 @@ section { padding: 90px 48px; position: relative; }
   margin-bottom: 16px;
 }
 .cap-desc {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 0.8rem;
   color: var(--muted);
   line-height: 1.7;
   margin-bottom: 14px;
 }
+.cap-desc .ui-icon { width: 16px; height: 16px; margin-top: 3px; color: var(--text); opacity: .8; }
 .cap-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 .ctag {
   background: var(--bg);
@@ -901,6 +906,11 @@ footer {
   footer { padding: 18px 24px; }
 }
 @media (max-width: 640px) {
+  section { padding: 56px 20px; }
+  #work { padding-top: 88px; }
+  .skills-layout, .cap-cols, .about-layout, .cta-wrap { min-width: 0; width: 100%; }
+  .work-header-left, .sec-sub-work { min-width: 0; max-width: 100%; }
+  .view-more-btn { max-width: 100%; white-space: normal; }
   .about-big-heading { font-size: clamp(2.2rem, 8vw, 3rem); }
   .fan-card { width: 230px; height: 162px; border-radius: 14px; }
   .fan-card[data-pos="-2"] { transform: translateX(-250px) translateY(26px) rotate(-8deg) scale(0.72); }
@@ -912,13 +922,24 @@ footer {
   .btn-solid, .btn-outline { width: 100%; text-align: center; padding: 13px 20px; }
   footer { padding: 18px 20px; flex-direction: column; align-items: flex-start; }
 }
+@media (max-width: 380px) {
+  nav { padding: 10px 14px; }
+  .nav-logo-box { width: 36px; height: 36px; }
+  .hire-btn { display: none; }
+  .nav-right { gap: 6px; }
+  .fan-card { width: min(230px, calc(100vw - 48px)); }
+  .fan-card[data-pos="-2"] { transform: translateX(-205px) translateY(24px) rotate(-8deg) scale(.68); }
+  .fan-card[data-pos="-1"] { transform: translateX(-112px) translateY(8px) rotate(-4deg) scale(.82); }
+  .fan-card[data-pos="1"] { transform: translateX(112px) translateY(8px) rotate(4deg) scale(.82); }
+  .fan-card[data-pos="2"] { transform: translateX(205px) translateY(24px) rotate(8deg) scale(.68); }
+}
 </style>
 </head>
 <body>
 
 <!-- MOBILE MENU -->
 <div class="mob-overlay" id="mobMenu">
-  <button class="mob-close" id="mobClose">âœ•</button>
+  <button class="mob-close" id="mobClose" aria-label="Tutup menu"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></svg></button>
   <a href="#work"    data-i18n="mob_work" onclick="closeMob()">Karya</a>
   <a href="#skills"  data-i18n="mob_skills" onclick="closeMob()">Kemampuan</a>
   <a href="#about"   data-i18n="mob_about" onclick="closeMob()">Tentang</a>
@@ -943,7 +964,7 @@ footer {
       <button type="button" data-lang="en" aria-label="English">EN</button>
     </div>
     <button class="theme-btn" id="themeBtn" title="Ganti tema" aria-label="Ganti tema"></button>
-    <button class="menu-btn" id="menuBtn" aria-label="Buka menu">â˜°</button>
+    <button class="menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="mobMenu"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     <a href="#contact" class="hire-btn" data-i18n="hire">Rekrut Saya</a>
   </div>
 </nav>
@@ -1028,7 +1049,7 @@ footer {
           <div class="cap-cat"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4M8 9l-2 2 2 2m8-4 2 2-2 2"/></svg><span data-i18n="cap1_cat">IT / Pengembangan<br>Web</span></div>
         </div>
         <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4M8 9l-2 2 2 2m8-4 2 2-2 2m-3-5-2 6"/></svg></div>
-        <div class="cap-desc" data-i18n="cap1_desc">Membangun sistem digital fungsional â€” dari web app berbasis database hingga antarmuka interaktif yang responsif dan cepat.</div>
+        <div class="cap-desc" data-i18n="cap1_desc"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m8 9-3 3 3 3m8-6 3 3-3 3m-4-8-2 10"/></svg><span>Membangun sistem digital fungsional â€” dari web app berbasis database hingga antarmuka interaktif yang responsif dan cepat.</span></div>
         <div class="cap-tags">
           <span class="ctag">Web Development</span>
           <span class="ctag">React.js</span>
@@ -1045,7 +1066,7 @@ footer {
           <div class="cap-cat"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg><span data-i18n="cap2_cat">Visualisasi Data &amp;<br>Low-code</span></div>
         </div>
         <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/><path d="M17 6h4v4"/></svg></div>
-        <div class="cap-desc" data-i18n="cap2_desc">Mengubah data mentah menjadi visual bermakna & membangun aplikasi dengan platform low-code modern secara efisien.</div>
+        <div class="cap-desc" data-i18n="cap2_desc"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg><span>Mengubah data mentah menjadi visual bermakna & membangun aplikasi dengan platform low-code modern secara efisien.</span></div>
         <div class="cap-tags">
           <span class="ctag">Tableau</span>
           <span class="ctag">Power BI</span>
@@ -1545,6 +1566,19 @@ function applyLang(l) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const v = I18N[l][el.dataset.i18n];
     if (v !== undefined) el.innerHTML = v;
+    if (el.classList.contains('cap-desc')) {
+      const icon = el.dataset.i18n === 'cap1_desc'
+        ? '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m8 9-3 3 3 3m8-6 3 3-3 3m-4-8-2 10"/></svg>'
+        : '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg>';
+      if (!el.querySelector('.ui-icon')) el.insertAdjacentHTML('afterbegin', icon);
+      const textNode = [...el.childNodes].find(node => node.nodeType === Node.TEXT_NODE);
+      if (textNode) {
+        const text = textNode.textContent;
+        const span = document.createElement('span');
+        span.textContent = text;
+        textNode.replaceWith(span);
+      }
+    }
   });
   updateInfo(true);
   try { localStorage.setItem('lang', l); } catch (e) {}
@@ -1584,11 +1618,15 @@ const workTitleObserver = new IntersectionObserver(([entry]) => {
 workTitleObserver.observe(workTitle);
 
 /* â”€â”€â”€ MOBILE MENU â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-document.getElementById('menuBtn').addEventListener('click', () =>
-  document.getElementById('mobMenu').classList.add('open'));
-document.getElementById('mobClose').addEventListener('click', () =>
-  document.getElementById('mobMenu').classList.remove('open'));
-function closeMob() { document.getElementById('mobMenu').classList.remove('open'); }
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('mobMenu').classList.add('open');
+  document.getElementById('menuBtn').setAttribute('aria-expanded', 'true');
+});
+document.getElementById('mobClose').addEventListener('click', closeMob);
+function closeMob() {
+  document.getElementById('mobMenu').classList.remove('open');
+  document.getElementById('menuBtn').setAttribute('aria-expanded', 'false');
+}
 
 /* â”€â”€â”€ SCROLL REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function typeHeadingOnceOnReveal(heading) {
