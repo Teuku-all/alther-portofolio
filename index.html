@@ -1452,8 +1452,7 @@ themeBtn.addEventListener('click', () => {
   const x = r.left + r.width / 2, y = r.top + r.height / 2;
   const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
 
-  if (typeof document.startViewTransition !== 'function' || reduce ||
-      matchMedia('(max-width: 720px), (pointer: coarse)').matches) {
+  if (typeof document.startViewTransition !== 'function' || reduce) {
     fadeTheme(nextTheme);
     return;
   }
