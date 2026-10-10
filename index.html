@@ -278,11 +278,13 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
 .mq-wrap.bot { top: 58%; }
 .mq-row {
   display: flex;
+  width: max-content;
   white-space: nowrap;
   will-change: transform;
 }
-.mq-row.fwd { animation: about-heading-marquee 22s linear infinite; }
-.mq-row.rev { animation: mq-scroll-left 22s linear infinite; }
+.mq-txt { flex: none; }
+.mq-row.fwd { animation: about-heading-marquee 50s linear infinite; }
+.mq-row.rev { animation: mq-scroll-left 50s linear infinite; }
 .mq-txt {
   font-family: "Syne", sans-serif;
   font-weight: 800;
