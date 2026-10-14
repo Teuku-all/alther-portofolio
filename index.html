@@ -22,6 +22,7 @@
   --hire-bg: #f0f0f0;
   --hire-text: #0d0d0d;
   --wave-op: .13;
+  --ease-smooth: cubic-bezier(.22, 1, .36, 1);
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -83,7 +84,7 @@ html.motion-paused *, html.motion-paused *::before, html.motion-paused *::after 
 ::view-transition-new(root) { z-index: 2; }
 /* fallback: warna berubah halus di semua elemen (tanpa kedip) */
 html.theme-fade *, html.theme-fade *::before, html.theme-fade *::after {
-  transition: background-color .55s ease, color .55s ease, border-color .55s ease,
+  transition: background-color .55s var(--ease-smooth), color .55s var(--ease-smooth), border-color .55s var(--ease-smooth),
               fill .55s ease, stroke .55s ease, -webkit-text-stroke-color .55s ease,
               box-shadow .55s ease !important;
 }
@@ -104,7 +105,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 14px 32px;
-  transition: background-color .35s ease, border-color .35s ease, padding .35s cubic-bezier(.22,1,.36,1);
+  transition: background-color .35s var(--ease-smooth), border-color .35s var(--ease-smooth), padding .35s var(--ease-smooth);
 }
 nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
 /* brand kiri: kotak kecil + nama */
@@ -150,7 +151,7 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   font-weight: 500;
   padding: 6px 14px;
   border-radius: 6px;
-  transition: color 0.2s, background 0.2s;
+  transition: color .28s var(--ease-smooth), background-color .28s var(--ease-smooth);
   white-space: nowrap;
   letter-spacing: 0.01em;
 }
@@ -172,7 +173,7 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color .28s var(--ease-smooth), color .28s var(--ease-smooth);
 }
 .theme-btn .ui-icon { width: 17px; height: 17px; }
 .theme-btn.theme-changing .ui-icon { animation: theme-icon-switch .55s cubic-bezier(.22,1,.36,1) both; }
@@ -190,7 +191,7 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   border-radius: 8px;
   text-decoration: none;
   white-space: nowrap;
-  transition: opacity 0.2s, transform 0.15s;
+  transition: opacity .28s var(--ease-smooth), transform .28s var(--ease-smooth);
   letter-spacing: 0.01em;
 }
 .hire-btn:hover { opacity: 0.85; transform: translateY(-1px); }
@@ -220,7 +221,7 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   gap: 8px;
   backdrop-filter: blur(24px);
 }
-.mob-overlay.open { display: flex; animation: mobIn .35s ease both; }
+.mob-overlay.open { display: flex; animation: mobIn .45s var(--ease-smooth) both; }
 @keyframes mobIn { from { opacity: 0; } to { opacity: 1; } }
 :focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 .mob-overlay a {
@@ -230,7 +231,7 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   font-weight: 800;
   font-size: 2.2rem;
   padding: 10px 0;
-  transition: color 0.2s;
+  transition: color .28s var(--ease-smooth);
 }
 .mob-overlay a:hover { color: var(--text); }
 .mob-close {
@@ -427,7 +428,7 @@ section { padding: 90px 48px; position: relative; }
   font-size: 0.78rem;
   color: var(--muted);
   text-decoration: none;
-  transition: border-color .25s ease, color .25s ease, transform .35s cubic-bezier(.22,1,.36,1), background-color .25s ease;
+  transition: border-color .28s var(--ease-smooth), color .28s var(--ease-smooth), transform .35s var(--ease-smooth), background-color .28s var(--ease-smooth);
   white-space: nowrap;
   align-self: flex-start;
 }
@@ -447,7 +448,7 @@ section { padding: 90px 48px; position: relative; }
 }
 .fan-carousel.dragging { cursor: grabbing; }
 .fan-card {
-  --ease: cubic-bezier(.22, 1, .36, 1);
+  --ease: var(--ease-smooth);
   position: absolute;
   width: 330px;
   height: 232px;
@@ -530,7 +531,7 @@ section { padding: 90px 48px; position: relative; }
   border: 1px solid var(--border); background: var(--surface); color: var(--text);
   font-size: 1rem; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: border-color .2s, background .2s, transform .15s;
+  transition: border-color .28s var(--ease-smooth), background-color .28s var(--ease-smooth), transform .24s var(--ease-smooth);
 }
 .fan-arrow .ui-icon { width: 17px; height: 17px; }
 .fan-arrow:hover { border-color: var(--border-h); background: var(--bg2); transform: scale(1.06); }
@@ -539,7 +540,7 @@ section { padding: 90px 48px; position: relative; }
 .fan-dot {
   width: 7px; height: 7px; border-radius: 100px; border: 0; padding: 0;
   background: var(--muted2); cursor: pointer;
-  transition: width .5s cubic-bezier(.22,1,.36,1), background .3s;
+  transition: width .5s var(--ease-smooth), background-color .35s var(--ease-smooth);
 }
 .fan-dot.active { width: 26px; background: var(--text); }
 
@@ -547,7 +548,7 @@ section { padding: 90px 48px; position: relative; }
 .proj-info {
   margin-top: 36px;
   text-align: center;
-  transition: opacity .45s ease, transform .6s cubic-bezier(.22,1,.36,1);
+  transition: opacity .6s var(--ease-smooth), transform .6s var(--ease-smooth);
 }
 .proj-info.swap { opacity: 0 !important; transform: translateY(10px) !important; }
 .proj-info-title {
@@ -573,12 +574,12 @@ section { padding: 90px 48px; position: relative; }
   text-decoration: none;
   border-bottom: 1px solid var(--border);
   padding-bottom: 2px;
-  transition: border-color 0.2s, gap 0.2s;
+  transition: border-color .28s var(--ease-smooth), gap .28s var(--ease-smooth);
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
-.proj-info-link .ui-icon { width: 15px; height: 15px; transition: transform .2s ease; }
+.proj-info-link .ui-icon { width: 15px; height: 15px; transition: transform .28s var(--ease-smooth); }
 .proj-info-link:hover { border-color: var(--text); gap: 10px; }
 .proj-info-link:hover .ui-icon { transform: translate(2px, -2px); }
 
@@ -610,8 +611,8 @@ section { padding: 90px 48px; position: relative; }
   align-items: center;
   justify-content: center;
   color: var(--muted);
-  transition: border-color .3s ease, color .3s ease, background-color .3s ease,
-              transform .4s cubic-bezier(.22,1,.36,1), box-shadow .3s ease;
+  transition: border-color .32s var(--ease-smooth), color .32s var(--ease-smooth), background-color .32s var(--ease-smooth),
+              transform .42s var(--ease-smooth), box-shadow .32s var(--ease-smooth);
   cursor: default;
   position: relative;
 }
@@ -634,7 +635,7 @@ section { padding: 90px 48px; position: relative; }
   color: var(--muted);
   white-space: nowrap;
   opacity: 0;
-  transition: opacity .25s ease, transform .3s cubic-bezier(.22,1,.36,1);
+  transition: opacity .3s var(--ease-smooth), transform .35s var(--ease-smooth);
   transform: translate(-50%, 4px);
   pointer-events: none;
 }
@@ -724,18 +725,18 @@ section { padding: 90px 48px; position: relative; }
   position: relative; z-index: 1; min-width: 32px; padding: 0 8px;
   background: none; border: 0; border-radius: 5px; cursor: pointer;
   color: var(--muted); font: 600 .68rem/1 "Inter", sans-serif; letter-spacing: .06em;
-  transition: color .35s;
+  transition: color .35s var(--ease-smooth);
 }
 .lang-sw button:hover { color: var(--text); }
 .lang-sw button.active, .lang-sw button.active:hover { color: var(--hire-text); }
 .lang-pill {
   position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 2);
   background: var(--hire-bg); border-radius: 5px;
-  transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+  transition: transform .5s var(--ease-smooth);
 }
 .lang-sw[data-lang="en"] .lang-pill { transform: translateX(100%); }
 html.lang-vt::view-transition-old(root) { animation: none; }
-html.lang-vt::view-transition-new(root) { animation: vtIn .4s ease both; }
+html.lang-vt::view-transition-new(root) { animation: vtIn .45s var(--ease-smooth) both; }
 @keyframes vtIn { from { opacity: 0; } to { opacity: 1; } }
 @media (max-width: 480px) {
   .nav-right { gap: 6px; }
@@ -760,7 +761,7 @@ html.lang-vt::view-transition-new(root) { animation: vtIn .4s ease both; }
    ABOUT â€” persis referensi
    Full width heading + profil kiri, traits kanan
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-#about { background: var(--bg); }
+#about { background: var(--bg); padding-bottom: 0; }
 .about-big-heading {
   overflow: hidden;
   white-space: nowrap;
@@ -826,6 +827,85 @@ html.lang-vt::view-transition-new(root) { animation: vtIn .4s ease both; }
   margin-bottom: 18px;
 }
 .about-bio a { color: var(--text); text-underline-offset: 3px; }
+
+/* crossed project-logo police ribbons */
+#project-ribbons {
+  position: relative;
+  height: max(210px, calc(12.55vw + 62px));
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+.project-ribbon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 120vw;
+  height: 62px;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: 0 10px 18px rgba(0,0,0,.28);
+  transform: translate(-50%, -50%) rotate(-6deg);
+}
+.project-ribbon.reverse {
+  z-index: 2;
+  transform: translate(-50%, -50%) rotate(6deg);
+}
+.project-ribbon-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: max-content;
+  height: 100%;
+  overflow: hidden;
+  background: repeating-linear-gradient(135deg, #171717 0 12px, #f4d21e 12px 24px);
+  animation: project-ribbon-forward 28s linear infinite;
+  will-change: transform;
+}
+.project-ribbon-track::before {
+  content: "";
+  position: absolute;
+  inset: 8px 0;
+  z-index: 1;
+  background: #f4d21e;
+}
+.project-ribbon.reverse .project-ribbon-track {
+  animation-name: project-ribbon-reverse;
+  animation-duration: 34s;
+}
+.project-ribbon-set {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 120vw;
+  height: 100%;
+  flex: none;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 14px;
+  padding: 0 24px;
+}
+.project-logo-slot {
+  display: block;
+  width: 82px;
+  height: 40px;
+  flex: none;
+  object-fit: contain;
+  background: transparent;
+}
+@media (max-width: 480px) {
+  .project-logo-slot { width: 68px; height: 36px; }
+}
+@keyframes project-ribbon-forward {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes project-ribbon-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
 .currently-bar {
   display: flex;
   gap: 20px;
@@ -885,9 +965,9 @@ html.lang-vt::view-transition-new(root) { animation: vtIn .4s ease both; }
 .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-outline .ui-icon { width: 16px; height: 16px; flex: none; }
-.cta-btns .ui-icon { width: 16px; height: 16px; flex: none; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.cta-btns .ui-icon { width: 16px; height: 16px; flex: none; transition: transform .35s var(--ease-smooth); }
 #contact .cta-btns a:hover .ui-icon, #contact .cta-btns a:focus-visible .ui-icon { transform: translateY(-1px) scale(1.08); }
-#contact .cta-btns a { transition: color .25s ease, background-color .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
+#contact .cta-btns a { transition: color .3s var(--ease-smooth), background-color .3s var(--ease-smooth), border-color .3s var(--ease-smooth), box-shadow .3s var(--ease-smooth), transform .3s var(--ease-smooth); }
 #contact .cta-btns a:hover, #contact .cta-btns a:focus-visible {
   background: #4f7cff;
   color: #fff;
@@ -896,16 +976,16 @@ html.lang-vt::view-transition-new(root) { animation: vtIn .4s ease both; }
   opacity: 1;
   transform: translateY(-2px);
 }
-.btn-solid { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--hire-bg); color: var(--hire-text); font-weight: 600; font-size: 0.82rem; padding: 12px 26px; border-radius: 10px; text-decoration: none; transition: opacity 0.2s, transform 0.15s; }
+.btn-solid { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--hire-bg); color: var(--hire-text); font-weight: 600; font-size: 0.82rem; padding: 12px 26px; border-radius: 10px; text-decoration: none; transition: opacity .28s var(--ease-smooth), transform .28s var(--ease-smooth); }
 .btn-solid:hover { opacity: 0.85; transform: translateY(-2px); }
-.btn-outline { background: transparent; color: var(--text); font-weight: 500; font-size: 0.82rem; padding: 12px 26px; border-radius: 10px; border: 1px solid var(--border); text-decoration: none; transition: border-color 0.2s, transform 0.15s; }
+.btn-outline { background: transparent; color: var(--text); font-weight: 500; font-size: 0.82rem; padding: 12px 26px; border-radius: 10px; border: 1px solid var(--border); text-decoration: none; transition: border-color .28s var(--ease-smooth), transform .28s var(--ease-smooth); }
 .btn-outline:hover { border-color: var(--border-h); transform: translateY(-2px); }
 #contact .cta-btns a {
   background: transparent;
   color: var(--text);
   border: 1px solid var(--border);
-  transition: background-color .25s ease, color .25s ease, border-color .25s ease,
-              box-shadow .25s ease, transform .25s ease;
+  transition: background-color .3s var(--ease-smooth), color .3s var(--ease-smooth), border-color .3s var(--ease-smooth),
+              box-shadow .3s var(--ease-smooth), transform .3s var(--ease-smooth);
 }
 #contact .cta-btns a:hover, #contact .cta-btns a:focus-visible {
   background: #111;
@@ -939,7 +1019,7 @@ footer {
 .foot-copy { display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--muted); }
 .foot-copy .ui-icon { width: 14px; height: 14px; color: #e77b8b; }
 .foot-links { display: flex; gap: 20px; }
-.foot-links a { font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.foot-links a { font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color .28s var(--ease-smooth); }
 .foot-links a:hover { color: var(--text); }
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -1204,6 +1284,21 @@ footer {
 </section>
 
 <!-- â•â•â• CONTACT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section id="project-ribbons" aria-label="Logo proyek">
+  <div class="project-ribbon" aria-label="Pita proyek bergerak ke kiri">
+    <div class="project-ribbon-track">
+      <div class="project-ribbon-set"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt="Logo Solvox"><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt="Logo Void Play Box"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt="Logo Solvox"><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt="Logo Void Play Box"></div>
+      <div class="project-ribbon-set" aria-hidden="true"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt=""><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt=""><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt=""><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt=""></div>
+    </div>
+  </div>
+  <div class="project-ribbon reverse" aria-label="Pita proyek bergerak ke kanan">
+    <div class="project-ribbon-track">
+      <div class="project-ribbon-set"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt="Logo Solvox"><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt="Logo Void Play Box"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt="Logo Solvox"><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt="Logo Void Play Box"></div>
+      <div class="project-ribbon-set" aria-hidden="true"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt=""><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt=""><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt=""><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt=""></div>
+    </div>
+  </div>
+</section>
+
 <section id="contact">
   <div class="cta-wrap rv">
     <p class="eyebrow" data-i18n="ct_eyebrow" style="display:flex;justify-content:center">Hubungi Saya</p>
@@ -1258,7 +1353,7 @@ const projects = [
   { label:'Mobile App', icon:'phone', img:'assets/work-dummy-mobile.svg', c1:'#e03131', c2:'#330c0c', zoom:1,    shift:'-2%',
     t:{ id:{ title:'Aplikasi Mobile Manajemen Tugas',  desc:'Aplikasi mobile lintas platform untuk manajemen tugas harian dengan notifikasi cerdas dan UI yang bersih.' },
         en:{ title:'Task Management Mobile App',       desc:'A cross-platform mobile app for daily task management with smart notifications and a clean UI.' } } },
-  { label:'Math Game', icon:'math', img:'assets/project-solvox.png', preview:'laptop', url:'https://solvoxweb.vercel.app/', c1:'#5b5ce2', c2:'#10151c', zoom:1,
+  { label:'Math Game', icon:'math', img:'assets/project-solvox.png', preview:'laptop', url:'https://solvox-4ipt.vercel.app/', c1:'#5b5ce2', c2:'#10151c', zoom:1,
     t:{ id:{ title:'Solvox — Game Matematika Berbasis Web', desc:'Game web interaktif bertema matematika yang mengemas latihan berhitung menjadi pengalaman bermain.' },
         en:{ title:'Solvox — Web-Based Math Game', desc:'An interactive web game built around mathematics, turning calculation practice into a playful experience.' } } },
 ];
