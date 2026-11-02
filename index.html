@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Teuku Al Jumanatul Ali â€” Portfolio</title>
+<link rel="icon" type="image/png" href="assets/brand-logo.png">
+<link rel="apple-touch-icon" href="assets/brand-logo.png">
+<title>Teuku Al Jumanatul Ali — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -83,14 +85,17 @@ html.motion-paused *, html.motion-paused *::before, html.motion-paused *::after 
 ::view-transition-old(root) { z-index: 1; }
 ::view-transition-new(root) { z-index: 2; }
 /* fallback: warna berubah halus di semua elemen (tanpa kedip) */
-html.theme-fade *, html.theme-fade *::before, html.theme-fade *::after {
-  transition: background-color .55s var(--ease-smooth), color .55s var(--ease-smooth), border-color .55s var(--ease-smooth),
-              fill .55s ease, stroke .55s ease, -webkit-text-stroke-color .55s ease,
-              box-shadow .55s ease !important;
+html.theme-fade body, html.theme-fade nav, html.theme-fade section,
+html.theme-fade .mob-overlay, html.theme-fade .fan-card-inner,
+html.theme-fade button, html.theme-fade a, html.theme-fade .trait-pill,
+html.theme-fade .ctag, html.theme-fade .tech-logo {
+  transition: background-color 1.1s cubic-bezier(.65,0,.35,1), color 1.1s cubic-bezier(.65,0,.35,1), border-color 1.1s cubic-bezier(.65,0,.35,1),
+              fill 1.1s ease, stroke 1.1s ease, -webkit-text-stroke-color 1.1s ease,
+              box-shadow 1.1s ease, transform .35s var(--ease-smooth), opacity .28s ease;
 }
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   NAVBAR â€” persis referensi
+   NAVBAR — persis referensi
    full-width, bukan pill
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 nav {
@@ -176,7 +181,7 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   transition: border-color .28s var(--ease-smooth), color .28s var(--ease-smooth);
 }
 .theme-btn .ui-icon { width: 17px; height: 17px; }
-.theme-btn.theme-changing .ui-icon { animation: theme-icon-switch .55s cubic-bezier(.22,1,.36,1) both; }
+.theme-btn.theme-changing .ui-icon { animation: theme-icon-switch 1.1s cubic-bezier(.22,1,.36,1) both; }
 @keyframes theme-icon-switch {
   from { opacity: 0; transform: rotate(-70deg) scale(.65); }
   to { opacity: 1; transform: rotate(0) scale(1); }
@@ -210,7 +215,11 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
 .menu-btn .ui-icon { width: 20px; height: 20px; }
 /* mobile overlay */
 .mob-overlay {
-  display: none;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .28s var(--ease-smooth), visibility 0s .28s;
   position: fixed;
   inset: 0;
   background: var(--nav-bg);
@@ -221,7 +230,10 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   gap: 8px;
   backdrop-filter: blur(24px);
 }
-.mob-overlay.open { display: flex; animation: mobIn .45s var(--ease-smooth) both; }
+.mob-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
+html.menu-open { overflow: hidden; }
+.mob-overlay a { transform: translateY(10px); }
+.mob-overlay.open a { transform: translateY(0); }
 @keyframes mobIn { from { opacity: 0; } to { opacity: 1; } }
 :focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 .mob-overlay a {
@@ -231,7 +243,7 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   font-weight: 800;
   font-size: 2.2rem;
   padding: 10px 0;
-  transition: color .28s var(--ease-smooth);
+  transition: color .28s var(--ease-smooth), transform .35s var(--ease-smooth);
 }
 .mob-overlay a:hover { color: var(--text); }
 .mob-close {
@@ -248,7 +260,7 @@ nav.is-compact { padding-top: 10px; padding-bottom: 10px; }
   align-items: center;
   justify-content: center;
 }
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   nav { padding: 12px 20px; }
   .nav-links { display: none; }
   .menu-btn { display: flex; }
@@ -390,16 +402,17 @@ section { padding: 90px 48px; position: relative; }
   margin-bottom: 12px;
 }
 /* reveal */
-.rv { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.rv { opacity: 1; transform: translate3d(0, 24px, 0); transition: opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1); }
+html.reveal-ready .rv:not(.in) { opacity: 0; }
 .rv.in { opacity: 1; transform: translate3d(0, 0, 0); }
 .d1 { transition-delay: .1s; }
 .d2 { transition-delay: .2s; }
 .d3 { transition-delay: .3s; }
-.rv.d1 { transform: perspective(1000px) translate3d(0, 34px, -70px) rotateX(8deg) scale(.97); transform-origin: center bottom; backface-visibility: hidden; }
-.rv.d1.in { transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0) scale(1); }
+.rv.d1 { transform: translate3d(0, 24px, 0); transform-origin: center bottom; backface-visibility: hidden; }
+.rv.d1.in { transform: translate3d(0, 0, 0); }
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   WORK GALLERY â€” fan/3D stack seperti referensi
+   WORK GALLERY — fan/3D stack seperti referensi
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 #work { background: var(--bg); padding-top: 100px; }
 .work-header {
@@ -457,8 +470,7 @@ section { padding: 90px 48px; position: relative; }
   border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
-  will-change: transform, opacity;
-  transition: transform 1.1s var(--ease), opacity 1.1s var(--ease), box-shadow 1.1s var(--ease), filter 1.1s var(--ease);
+  transition: transform .7s cubic-bezier(.22,1,.36,1), opacity .45s ease;
   box-shadow: 0 10px 30px rgba(0,0,0,.18);
 }
 .fan-card-inner { width: 100%; height: 100%; position: relative; background: var(--bg2); }
@@ -519,7 +531,8 @@ section { padding: 90px 48px; position: relative; }
 .fan-card[data-pos="0"]  { transform: translateX(0) translateY(0) rotate(0deg) scale(1);             opacity: 1;   z-index: 5; box-shadow: 0 34px 80px rgba(0,0,0,.5); }
 .fan-card[data-pos="1"]  { transform: translateX(215px) translateY(12px) rotate(4deg) scale(0.88);   opacity: .7;  z-index: 2; filter: saturate(.85); }
 .fan-card[data-pos="2"]  { transform: translateX(380px) translateY(34px) rotate(8deg) scale(0.74);   opacity: .35; z-index: 1; filter: saturate(.7); }
-.fan-card[data-pos="hidden"] { transform: translateX(0) scale(.6); opacity: 0; z-index: 0; pointer-events: none; }
+.fan-card[data-pos="hidden"] { visibility: hidden;
+ transform: translateX(0) scale(.6); opacity: 0; z-index: 0; pointer-events: none; }
 
 /* controls: panah + dots */
 .fan-controls {
@@ -584,7 +597,7 @@ section { padding: 90px 48px; position: relative; }
 .proj-info-link:hover .ui-icon { transform: translate(2px, -2px); }
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   WHAT I CAN DO â€” persis referensi
+   WHAT I CAN DO — persis referensi
    kiri: judul + logo grid
    kanan: numbered cards dengan divider
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
@@ -758,7 +771,7 @@ html.lang-vt::view-transition-new(root) { animation: vtIn .45s var(--ease-smooth
 .nav-logo-box img, .about-avatar img { object-position: center; }
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   ABOUT â€” persis referensi
+   ABOUT — persis referensi
    Full width heading + profil kiri, traits kanan
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 #about { background: var(--bg); padding-bottom: 0; }
@@ -879,25 +892,25 @@ html.lang-vt::view-transition-new(root) { animation: vtIn .45s var(--ease-smooth
   position: relative;
   z-index: 2;
   display: flex;
-  width: 120vw;
+  width: max(120vw, 1152px);
   height: 100%;
   flex: none;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 14px;
-  padding: 0 24px;
+  justify-content: space-around;
+  gap: 0;
+  padding: 0;
 }
 .project-logo-slot {
   display: block;
-  width: 82px;
-  height: 40px;
+  width: 96px;
+  height: 34px;
   flex: none;
   object-fit: contain;
   background: transparent;
 }
 @media (max-width: 480px) {
-  .project-ribbon-set { gap: 8px; padding: 0 16px; }
-  .project-logo-slot { width: 52px; height: 32px; }
+  .project-ribbon-set { width: max(120vw, 832px); }
+  .project-logo-slot { width: 72px; height: 32px; }
 }
 @keyframes project-ribbon-forward {
   from { transform: translateX(0); }
@@ -918,7 +931,7 @@ html.lang-vt::view-transition-new(root) { animation: vtIn .45s var(--ease-smooth
 .curr-icon { display: inline-flex; color: var(--muted); flex: none; }
 .curr-icon .ui-icon { width: 16px; height: 16px; }
 .curr-label { color: var(--text); font-weight: 500; display: block; font-size: 0.72rem; }
-/* floating traits â€” persis referensi */
+/* floating traits — persis referensi */
 .traits-cloud {
   position: relative;
   height: 280px;
@@ -1091,12 +1104,95 @@ footer {
   .fan-card[data-pos="1"] { transform: translateX(112px) translateY(8px) rotate(4deg) scale(.82); }
   .fan-card[data-pos="2"] { transform: translateX(205px) translateY(24px) rotate(8deg) scale(.68); }
 }
+
+.fan-carousel.is-visible .fan-card:not([data-pos="hidden"]) { will-change: transform, opacity; }
+.motion-offscreen .mq-row, .motion-offscreen .about-heading-track,
+.motion-offscreen .project-ribbon-track, .motion-offscreen .trait-pill,
+.motion-offscreen .scroll-down::after { animation-play-state: paused; }
+@media (hover: none), (pointer: coarse) {
+  nav, .mob-overlay { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .fan-card { filter: none !important; }
+  .rv { transition-duration: .5s; }
+  .rv.d1, .rv.d2, .rv.d3 { transition-delay: 0s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rv, .rv.d1, .rv.in { opacity: 1 !important; transform: none !important; }
+  .mq-row, .about-heading-track, .project-ribbon-track, .trait-pill { animation: none !important; }
+}
+
+
+/* Mobile touch targets, readable labels, and short/landscape menu layouts. */
+.mob-overlay {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: max(76px, calc(env(safe-area-inset-top, 0px) + 56px))
+           max(20px, env(safe-area-inset-right, 0px))
+           max(24px, env(safe-area-inset-bottom, 0px))
+           max(20px, env(safe-area-inset-left, 0px));
+  justify-content: safe center;
+}
+.mob-overlay a {
+  flex-shrink: 0;
+  width: min(100%, 24rem);
+  text-align: center;
+  font-size: clamp(1.35rem, 5vw, 2rem);
+  line-height: 1.2;
+  min-height: 44px;
+  padding: 12px 8px;
+  overflow-wrap: anywhere;
+}
+.mob-close {
+  top: max(16px, env(safe-area-inset-top, 0px));
+  right: max(20px, env(safe-area-inset-right, 0px));
+  width: 44px; height: 44px;
+}
+@media (max-width: 900px) {
+  nav { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-top: calc(12px + env(safe-area-inset-top, 0px)); }
+  nav.is-compact { padding-top: calc(10px + env(safe-area-inset-top, 0px)); }
+  .menu-btn, .theme-btn { width: 44px; height: 44px; }
+  .lang-sw { min-height: 44px; }
+  .lang-sw button { min-height: 38px; }
+}
+@media (hover: none), (pointer: coarse) {
+  .tech-logo span { opacity: 1; transform: translate(-50%, 0); font-size: .6rem; }
+}
+@media (max-width: 900px) {
+  .fan-arrow { width: 44px; height: 44px; flex: none; }
+  .fan-controls { gap: 12px; }
+  .fan-dots { gap: 0; }
+  .fan-dot, .fan-dot.active {
+    position: relative;
+    width: 24px; height: 32px; flex: none;
+    background: transparent;
+    transition: none;
+  }
+  .fan-dot::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 6px; height: 6px; border-radius: 10px;
+    background: var(--muted2); transform: translate(-50%, -50%);
+    transition: width .25s var(--ease-smooth), background-color .25s ease;
+  }
+  .fan-dot.active::before { width: 18px; background: var(--text); }
+  .proj-info-title, .proj-info-desc, .about-profile > div { overflow-wrap: anywhere; min-width: 0; }
+  .foot-copy { flex-wrap: wrap; }
+  .foot-links { flex-wrap: wrap; row-gap: 12px; }
+  .foot-links a { display: inline-flex; align-items: center; min-height: 32px; }
+}
+@media (max-width: 380px) {
+  .fan-controls { flex-wrap: wrap; gap: 8px 20px; }
+  .fan-dots { order: 1; flex-basis: 100%; justify-content: center; }
+}
+@media (max-height: 480px) and (max-width: 900px) {
+  .mob-overlay { gap: 4px; padding-top: max(64px, env(safe-area-inset-top, 0px)); padding-bottom: max(16px, env(safe-area-inset-bottom, 0px)); }
+  .mob-overlay a { font-size: 1.35rem; padding-top: 8px; padding-bottom: 8px; }
+}
+
 </style>
 </head>
 <body>
 
 <!-- MOBILE MENU -->
-<div class="mob-overlay" id="mobMenu">
+<div class="mob-overlay" id="mobMenu" role="dialog" aria-modal="true" aria-label="Navigasi" aria-hidden="true" inert>
   <button class="mob-close" id="mobClose" aria-label="Tutup menu"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></svg></button>
   <a href="#work"    data-i18n="mob_work" onclick="closeMob()">Karya</a>
   <a href="#skills"  data-i18n="mob_skills" onclick="closeMob()">Kemampuan</a>
@@ -1205,7 +1301,7 @@ footer {
           <div class="cap-cat"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4M8 9l-2 2 2 2m8-4 2 2-2 2"/></svg><span data-i18n="cap1_cat">IT / Pengembangan<br>Web</span></div>
         </div>
         <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4M8 9l-2 2 2 2m8-4 2 2-2 2m-3-5-2 6"/></svg></div>
-        <div class="cap-desc" data-i18n="cap1_desc"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m8 9-3 3 3 3m8-6 3 3-3 3m-4-8-2 10"/></svg><span>Membangun sistem digital fungsional â€” dari web app berbasis database hingga antarmuka interaktif yang responsif dan cepat.</span></div>
+        <div class="cap-desc" data-i18n="cap1_desc"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m8 9-3 3 3 3m8-6 3 3-3 3m-4-8-2 10"/></svg><span>Membangun sistem digital fungsional — dari web app berbasis database hingga antarmuka interaktif yang responsif dan cepat.</span></div>
         <div class="cap-tags">
           <span class="ctag">Web Development</span>
           <span class="ctag">React.js</span>
@@ -1219,18 +1315,18 @@ footer {
       <div class="cap-col rv d1">
         <div class="cap-col-header">
           <div class="cap-num">02</div>
-          <div class="cap-cat"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg><span data-i18n="cap2_cat">Visualisasi Data &amp;<br>Low-code</span></div>
+          <div class="cap-cat"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/></svg><span data-i18n="cap2_cat">Cyber<br>Security</span></div>
         </div>
-        <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/><path d="M17 6h4v4"/></svg></div>
-        <div class="cap-desc" data-i18n="cap2_desc"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg><span>Mengubah data mentah menjadi visual bermakna & membangun aplikasi dengan platform low-code modern secara efisien.</span></div>
+        <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/></svg></div>
+        <div class="cap-desc" data-i18n="cap2_desc"><svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/></svg><span>Menganalisis keamanan aplikasi dan jaringan, mengidentifikasi kerentanan, serta menerapkan perlindungan untuk menjaga sistem dan data.</span></div>
         <div class="cap-tags">
-          <span class="ctag">Tableau</span>
-          <span class="ctag">Power BI</span>
+          <span class="ctag">Web Security</span>
+          <span class="ctag">Network Security</span>
+          <span class="ctag">Vulnerability Assessment</span>
+          <span class="ctag">Security Analysis</span>
+          <span class="ctag">Linux</span>
           <span class="ctag">Python</span>
-          <span class="ctag">Chart.js</span>
-          <span class="ctag">Bubble.io</span>
-          <span class="ctag">Make.com</span>
-          <span class="ctag">Airtable</span>
+          <span class="ctag">Data Protection</span>
         </div>
       </div>
     </div>
@@ -1288,14 +1384,14 @@ footer {
 <section id="project-ribbons" aria-label="Logo proyek">
   <div class="project-ribbon" aria-label="Pita proyek bergerak ke kiri">
     <div class="project-ribbon-track">
-      <div class="project-ribbon-set"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt="Logo Solvox"><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt="Logo Void Play Box"><img class="project-logo-slot" src="assets/wave-leaf-logo.png" alt="Logo gelombang dan daun"><img class="project-logo-slot" src="assets/ikon-audit-terverifikasi.png" alt="Logo audit terverifikasi"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt="Logo Solvox"><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt="Logo Void Play Box"><img class="project-logo-slot" src="assets/wave-leaf-logo.png" alt="Logo gelombang dan daun"><img class="project-logo-slot" src="assets/ikon-audit-terverifikasi.png" alt="Logo audit terverifikasi"></div>
-      <div class="project-ribbon-set" aria-hidden="true"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt=""><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt=""><img class="project-logo-slot" src="assets/wave-leaf-logo.png" alt=""><img class="project-logo-slot" src="assets/ikon-audit-terverifikasi.png" alt=""><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt=""><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt=""><img class="project-logo-slot" src="assets/wave-leaf-logo.png" alt=""><img class="project-logo-slot" src="assets/ikon-audit-terverifikasi.png" alt=""></div>
+      <div class="project-ribbon-set"><svg class="project-logo-slot" role="img" aria-label="Logo Solvox" viewBox="17 10 1301 480"><image href="assets/dungeon_1790529283.png" width="1366" height="507"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo Void Play Box" viewBox="148 87 1210 915"><image href="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" width="1501" height="1048"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo gelombang dan daun" viewBox="14 4 213 171"><image href="assets/wave-leaf-logo.png" width="248" height="187"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo AuditMonitor" viewBox="344 321 584 633"><image href="assets/audit-logo.png" width="1254" height="1254"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo Solvox" viewBox="17 10 1301 480"><image href="assets/dungeon_1790529283.png" width="1366" height="507"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo Void Play Box" viewBox="148 87 1210 915"><image href="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" width="1501" height="1048"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo gelombang dan daun" viewBox="14 4 213 171"><image href="assets/wave-leaf-logo.png" width="248" height="187"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo AuditMonitor" viewBox="344 321 584 633"><image href="assets/audit-logo.png" width="1254" height="1254"/></svg></div>
+      <div class="project-ribbon-set" aria-hidden="true"><svg class="project-logo-slot" aria-hidden="true" viewBox="17 10 1301 480"><image href="assets/dungeon_1790529283.png" width="1366" height="507"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="148 87 1210 915"><image href="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" width="1501" height="1048"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="14 4 213 171"><image href="assets/wave-leaf-logo.png" width="248" height="187"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="344 321 584 633"><image href="assets/audit-logo.png" width="1254" height="1254"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="17 10 1301 480"><image href="assets/dungeon_1790529283.png" width="1366" height="507"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="148 87 1210 915"><image href="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" width="1501" height="1048"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="14 4 213 171"><image href="assets/wave-leaf-logo.png" width="248" height="187"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="344 321 584 633"><image href="assets/audit-logo.png" width="1254" height="1254"/></svg></div>
     </div>
   </div>
   <div class="project-ribbon reverse" aria-label="Pita proyek bergerak ke kanan">
     <div class="project-ribbon-track">
-      <div class="project-ribbon-set"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt="Logo Solvox"><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt="Logo Void Play Box"><img class="project-logo-slot" src="assets/wave-leaf-logo.png" alt="Logo gelombang dan daun"><img class="project-logo-slot" src="assets/ikon-audit-terverifikasi.png" alt="Logo audit terverifikasi"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt="Logo Solvox"><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt="Logo Void Play Box"><img class="project-logo-slot" src="assets/wave-leaf-logo.png" alt="Logo gelombang dan daun"><img class="project-logo-slot" src="assets/ikon-audit-terverifikasi.png" alt="Logo audit terverifikasi"></div>
-      <div class="project-ribbon-set" aria-hidden="true"><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt=""><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt=""><img class="project-logo-slot" src="assets/wave-leaf-logo.png" alt=""><img class="project-logo-slot" src="assets/ikon-audit-terverifikasi.png" alt=""><img class="project-logo-slot" src="assets/dungeon_1790529283.png" alt=""><img class="project-logo-slot" src="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" alt=""><img class="project-logo-slot" src="assets/wave-leaf-logo.png" alt=""><img class="project-logo-slot" src="assets/ikon-audit-terverifikasi.png" alt=""></div>
+      <div class="project-ribbon-set"><svg class="project-logo-slot" role="img" aria-label="Logo Solvox" viewBox="17 10 1301 480"><image href="assets/dungeon_1790529283.png" width="1366" height="507"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo Void Play Box" viewBox="148 87 1210 915"><image href="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" width="1501" height="1048"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo gelombang dan daun" viewBox="14 4 213 171"><image href="assets/wave-leaf-logo.png" width="248" height="187"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo AuditMonitor" viewBox="344 321 584 633"><image href="assets/audit-logo.png" width="1254" height="1254"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo Solvox" viewBox="17 10 1301 480"><image href="assets/dungeon_1790529283.png" width="1366" height="507"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo Void Play Box" viewBox="148 87 1210 915"><image href="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" width="1501" height="1048"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo gelombang dan daun" viewBox="14 4 213 171"><image href="assets/wave-leaf-logo.png" width="248" height="187"/></svg><svg class="project-logo-slot" role="img" aria-label="Logo AuditMonitor" viewBox="344 321 584 633"><image href="assets/audit-logo.png" width="1254" height="1254"/></svg></div>
+      <div class="project-ribbon-set" aria-hidden="true"><svg class="project-logo-slot" aria-hidden="true" viewBox="17 10 1301 480"><image href="assets/dungeon_1790529283.png" width="1366" height="507"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="148 87 1210 915"><image href="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" width="1501" height="1048"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="14 4 213 171"><image href="assets/wave-leaf-logo.png" width="248" height="187"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="344 321 584 633"><image href="assets/audit-logo.png" width="1254" height="1254"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="17 10 1301 480"><image href="assets/dungeon_1790529283.png" width="1366" height="507"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="148 87 1210 915"><image href="assets/Logo%20Monogram%20V-P%20Efek%20Pita%20Mengilap%20(1).png" width="1501" height="1048"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="14 4 213 171"><image href="assets/wave-leaf-logo.png" width="248" height="187"/></svg><svg class="project-logo-slot" aria-hidden="true" viewBox="344 321 584 633"><image href="assets/audit-logo.png" width="1254" height="1254"/></svg></div>
     </div>
   </div>
 </section>
@@ -1346,8 +1442,8 @@ const projects = [
     t:{ id:{ title:'Sistem Manajemen Data Mahasiswa',  desc:'Aplikasi full-stack untuk pengelolaan data akademik, jadwal, dan pelaporan otomatis dengan antarmuka yang intuitif.' },
         en:{ title:'Student Data Management System',   desc:'A full-stack application for managing academic data, schedules, and automated reporting with an intuitive interface.' } } },
   { label:'Low-code', icon:'bolt', img:'assets/work-dummy-lowcode.svg',    c1:'#f08c00', c2:'#3a2200', zoom:1,    shift:'2%',
-    t:{ id:{ title:'Aplikasi Inventory Low-code',      desc:'Sistem manajemen stok berbasis Bubble.io dan Make.com â€” dari ide ke produksi dalam hitungan hari, bukan bulan.' },
-        en:{ title:'Low-code Inventory App',           desc:'A stock management system built on Bubble.io and Make.com â€” from idea to production in days, not months.' } } },
+    t:{ id:{ title:'Aplikasi Inventory Low-code',      desc:'Sistem manajemen stok berbasis Bubble.io dan Make.com — dari ide ke produksi dalam hitungan hari, bukan bulan.' },
+        en:{ title:'Low-code Inventory App',           desc:'A stock management system built on Bubble.io and Make.com — from idea to production in days, not months.' } } },
   { label:'Data Viz', icon:'chart', img:'assets/work-dummy-dataviz.svg',   c1:'#ae3ec9', c2:'#2a0f33', zoom:1.04, shift:'0%',
     t:{ id:{ title:'Visualisasi Data Sensus Penduduk', desc:'Peta interaktif dan grafik tren demografis untuk mendukung riset sosial dan pengambilan kebijakan berbasis data.' },
         en:{ title:'Population Census Data Visualization', desc:'Interactive maps and demographic trend charts to support social research and data-driven policy making.' } } },
@@ -1375,6 +1471,9 @@ const piTitle  = document.getElementById('piTitle');
 const piDesc   = document.getElementById('piDesc');
 const total    = projects.length;
 let current = 0, infoTimer, autoTimer;
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+let reduce = motionPreference.matches;
+const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
 
 const projectIcons = {
   chart: '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg>',
@@ -1439,19 +1538,21 @@ function layout(first) {
       card.style.transition = 'none';
       card.style.opacity = '0';
       card.dataset.pos = pos;
-      card.getBoundingClientRect();
+      // Fade at the destination without forcing a synchronous layout.
+      card.getAnimations().forEach(animation => animation.cancel());
+      if (!reduce) card.animate([{ opacity: 0 }, { opacity: Math.abs(o) === 2 ? .35 : Math.abs(o) === 1 ? .7 : 1 }], { duration: 400, easing: 'ease-out' });
       card.style.transition = '';
       card.style.opacity = '';
     } else {
       card.dataset.pos = pos;
     }
-    card.setAttribute('aria-hidden', pos === '0' ? 'false' : 'true');
+    card.setAttribute('aria-hidden', pos === 'hidden' ? 'true' : 'false');
     card.tabIndex = pos === 'hidden' ? -1 : 0;
     card.setAttribute('aria-label', pos === '0'
       ? `${projects[i].t[lang].title}. Tekan untuk membuka proyek.`
       : `Pilih proyek: ${projects[i].t[lang].title}`);
   });
-  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  dots.forEach((d, i) => { d.classList.toggle('active', i === current); d.setAttribute('aria-pressed', String(i === current)); });
 }
 
 function updateInfo(immediate) {
@@ -1483,39 +1584,61 @@ const prev = user => goTo(current - 1, user);
 document.getElementById('fanNext').addEventListener('click', () => next(true));
 document.getElementById('fanPrev').addEventListener('click', () => prev(true));
 
-/* swipe / drag */
-let dragX = null, dragMoved = false;
-carousel.addEventListener('pointerdown', e => { dragX = e.clientX; dragMoved = false; carousel.classList.add('dragging'); });
-window.addEventListener('pointermove', e => { if (dragX !== null && Math.abs(e.clientX - dragX) > 8) dragMoved = true; });
-window.addEventListener('pointerup', e => {
-  if (dragX === null) return;
-  const dx = e.clientX - dragX; dragX = null;
+/* Keep vertical touch scrolling independent from horizontal gallery swipes. */
+let dragX = null, dragY = null, dragId = null, dragMoved = false, dragHorizontal = false;
+function resetDrag() {
+  dragX = dragY = dragId = null;
+  dragHorizontal = false;
   carousel.classList.remove('dragging');
-  if (Math.abs(dx) > 45) (dx < 0 ? next : prev)(true);
-  setTimeout(() => dragMoved = false, 0);
-});
-window.addEventListener('pointercancel', () => { dragX = null; carousel.classList.remove('dragging'); });
+}
+carousel.addEventListener('pointerdown', e => {
+  if (!e.isPrimary || e.button !== 0) return;
+  dragX = e.clientX; dragY = e.clientY; dragId = e.pointerId;
+  dragMoved = dragHorizontal = false;
+  clearTimeout(autoTimer);
+}, { passive: true });
+window.addEventListener('pointermove', e => {
+  if (e.pointerId !== dragId || dragX === null) return;
+  const dx = Math.abs(e.clientX - dragX), dy = Math.abs(e.clientY - dragY);
+  if (Math.max(dx, dy) <= 8) return;
+  dragMoved = true;
+  dragHorizontal = dx > dy;
+  carousel.classList.toggle('dragging', dragHorizontal);
+}, { passive: true });
+window.addEventListener('pointerup', e => {
+  if (e.pointerId !== dragId || dragX === null) return;
+  const dx = e.clientX - dragX;
+  const swipe = dragHorizontal && Math.abs(dx) > 45;
+  resetDrag();
+  if (swipe) (dx < 0 ? next : prev)(true);
+  else restartAuto();
+  // The click dispatched after pointerup still sees the drag guard.
+  setTimeout(() => { dragMoved = false; }, 0);
+}, { passive: true });
+window.addEventListener('pointercancel', () => { resetDrag(); restartAuto(); }, { passive: true });
+window.addEventListener('blur', () => { resetDrag(); restartAuto(); });
 
 /* keyboard (saat galeri terlihat) */
 let galleryVisible = false;
-new IntersectionObserver(es => { galleryVisible = es[0].isIntersecting; galleryVisible ? restartAuto() : clearTimeout(autoTimer); },
+new IntersectionObserver(es => { galleryVisible = es[0].isIntersecting; carousel.classList.toggle('is-visible', galleryVisible); restartAuto(); },
   { threshold: .35 }).observe(carousel);
 window.addEventListener('keydown', e => {
-  if (!galleryVisible) return;
-  if (e.key === 'ArrowRight') next(true);
-  if (e.key === 'ArrowLeft')  prev(true);
+  if (!galleryVisible || !document.getElementById('work').contains(document.activeElement) || e.target.closest('input, textarea, select, [contenteditable]')) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); next(true); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prev(true); }
 });
 
-/* autoplay lembut â€” berhenti saat hover / tab tidak aktif */
+/* autoplay lembut — berhenti saat hover / tab tidak aktif */
 let hovering = false;
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 function restartAuto() {
   clearTimeout(autoTimer);
-  if (reduce || !galleryVisible) return;
-  autoTimer = setTimeout(() => { if (!hovering && !document.hidden) next(false); restartAuto(); }, 5000);
+  if (reduce || !galleryVisible || document.hidden || hovering || dragX !== null || document.getElementById('work').contains(document.activeElement) || root.classList.contains('menu-open')) return;
+  autoTimer = setTimeout(() => { next(false); restartAuto(); }, 6000);
 }
-carousel.addEventListener('mouseenter', () => hovering = true);
-carousel.addEventListener('mouseleave', () => hovering = false);
+carousel.addEventListener('mouseenter', () => { if (finePointer.matches) { hovering = true; restartAuto(); } });
+carousel.addEventListener('mouseleave', () => { hovering = false; restartAuto(); });
+document.getElementById('work').addEventListener('focusin', () => clearTimeout(autoTimer));
+document.getElementById('work').addEventListener('focusout', () => setTimeout(restartAuto, 0));
 
 layout(true);
 updateInfo(true);
@@ -1545,7 +1668,7 @@ function fadeTheme(nextTheme) {
     root.classList.remove('theme-fade');
     themeBtn.classList.remove('theme-changing');
     themeBusy = false;
-  }, 650);
+  }, 1200);
 }
 themeBtn.addEventListener('click', () => {
   if (themeBusy) return;
@@ -1554,7 +1677,8 @@ themeBtn.addEventListener('click', () => {
   const x = r.left + r.width / 2, y = r.top + r.height / 2;
   const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
 
-  if (typeof document.startViewTransition !== 'function' || reduce) {
+  if (reduce) { applyTheme(nextTheme); return; }
+  if (typeof document.startViewTransition !== 'function' || !finePointer.matches || root.classList.contains('lang-vt')) {
     fadeTheme(nextTheme);
     return;
   }
@@ -1570,10 +1694,10 @@ themeBtn.addEventListener('click', () => {
     return;
   }
   vt.ready.then(() => {
-    root.animate(
+    return root.animate(
       { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-      { duration: 750, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' }
-    );
+      { duration: 1100, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' }
+    ).finished;
   }).catch(() => {});
   vt.finished.then(() => {
     themeBtn.classList.remove('theme-changing');
@@ -1590,6 +1714,8 @@ themeBtn.addEventListener('click', () => {
   const cv  = document.getElementById('contourBg');
   if (!sec || !cv) return;
   const ctx = cv.getContext('2d');
+  if (!ctx) return;
+  let visible = false, dirty = true;
 
   /* noise Perlin dengan seed tetap */
   const rnd = (a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a);
@@ -1622,9 +1748,13 @@ themeBtn.addEventListener('click', () => {
 
   /* marching squares â†’ segmen garis kontur */
   function build() {
-    w = sec.clientWidth; h = sec.clientHeight; dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    if (!visible || document.hidden) { dirty = true; return; }
+    dirty = false;
+    w = sec.clientWidth; h = sec.clientHeight;
+    if (!w || !h) return;
+    dpr = Math.min(window.devicePixelRatio || 1, finePointer.matches ? 1.5 : 1);
     cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-    const cell = 10, nx = Math.ceil(w / cell) + 1, ny = Math.ceil(h / cell) + 1, STEP = .3;
+    const cell = 12, nx = Math.ceil(w / cell) + 1, ny = Math.ceil(h / cell) + 1, STEP = .3;
     const F = new Float32Array(nx * ny);
     for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) F[j * nx + i] = field(i * cell, j * cell);
     const xs = [], ys = [];
@@ -1661,6 +1791,7 @@ themeBtn.addEventListener('click', () => {
   }
 
   function draw() {
+    if (!n || !visible || document.hidden) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, w, h);
     ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = 1.15; ctx.lineCap = 'round';
@@ -1678,6 +1809,8 @@ themeBtn.addEventListener('click', () => {
   let raf = 0, last = 0;
 
   function tick(t) {
+    raf = 0;
+    if (!visible || document.hidden || reduce || !finePointer.matches) return;
     const f = Math.min(2, (t - last) / 16.67 || 1); last = t;
     const R2 = R * R, mdx = Math.max(-60, Math.min(60, ptr.mx)), mdy = Math.max(-60, Math.min(60, ptr.my));
     const pointerMoving = Math.abs(ptr.mx) + Math.abs(ptr.my) > .01;
@@ -1710,10 +1843,11 @@ themeBtn.addEventListener('click', () => {
       }
     }
   }
-  const wake = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } };
+  const wake = () => { if (!raf && visible && !document.hidden && !reduce && finePointer.matches) { last = performance.now(); raf = requestAnimationFrame(tick); } };
 
   if (!reduce) {
     sec.addEventListener('pointermove', e => {
+      if (reduce || !finePointer.matches || e.pointerType !== 'mouse') return;
       const r = sec.getBoundingClientRect();
       ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.active = true;
       if (ptr.lx !== null) { ptr.mx += ptr.x - ptr.lx; ptr.my += ptr.y - ptr.ly; }
@@ -1733,7 +1867,23 @@ themeBtn.addEventListener('click', () => {
     if (Math.abs(sec.clientWidth - lw) < 2 && Math.abs(sec.clientHeight - lh) < 2) return;
     clearTimeout(rt); rt = setTimeout(() => { lw = sec.clientWidth; lh = sec.clientHeight; build(); }, 140);
   }).observe(sec);
-  lw = sec.clientWidth; lh = sec.clientHeight; build();
+  const stop = () => {
+    cancelAnimationFrame(raf); raf = 0;
+    ptr.active = false; ptr.lx = ptr.ly = null; ptr.mx = ptr.my = 0;
+    if (dx) { dx.fill(0); dy.fill(0); vx.fill(0); vy.fill(0); }
+  };
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (!visible) { stop(); return; }
+    if (dirty) build(); else draw();
+  }, { rootMargin: '100px' }).observe(sec);
+  document.addEventListener('visibilitychange', () => {
+    stop();
+    if (!document.hidden && visible) { if (dirty) build(); else draw(); }
+  });
+  motionPreference.addEventListener('change', () => { stop(); draw(); });
+  finePointer.addEventListener('change', () => { stop(); build(); });
+  lw = sec.clientWidth; lh = sec.clientHeight;
 })();
 
 /* â”€â”€â”€ BAHASA ID / EN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -1747,9 +1897,9 @@ const I18N = {
     sk_eyebrow:`Kemampuan Saya`, sk_title:`Yang Bisa<br>Saya Lakukan`,
     sk_intro:`Menggabungkan skill teknis, kreativitas, dan problem-solving untuk membangun solusi digital yang berdampak.`,
     cap1_cat:`IT / Pengembangan<br>Web`,
-    cap1_desc:`Membangun sistem digital fungsional â€” dari web app berbasis database hingga antarmuka interaktif yang responsif dan cepat.`,
-    cap2_cat:`Visualisasi Data &<br>Low-code`,
-    cap2_desc:`Mengubah data mentah menjadi visual bermakna & membangun aplikasi dengan platform low-code modern secara efisien.`,
+    cap1_desc:`Membangun sistem digital fungsional — dari web app berbasis database hingga antarmuka interaktif yang responsif dan cepat.`,
+    cap2_cat:`Cyber<br>Security`,
+    cap2_desc:`Menganalisis keamanan aplikasi dan jaringan, mengidentifikasi kerentanan, serta menerapkan perlindungan untuk menjaga sistem dan data.`,
     ab_eyebrow:`Tentang Saya`, ab_sub:`Informatika | Universitas Syiah Kuala`,
     st_projects:`Proyek`, st_clients:`Klien`, st_exp:`Tahun Pengalaman`,
     bio1:`Saya mahasiswa Informatika yang fokus pada <strong>web development, data visualization, dan low-code platform</strong>. Saya menikmati mengubah masalah nyata menjadi solusi digital yang praktis dan berdampak.`,
@@ -1758,7 +1908,7 @@ const I18N = {
     cur1_l:`Sedang Membangun`, cur1_v:`Proyek web & data`, cur2_l:`Menjelajahi`, cur2_v:`AI & otomasi`, cur3_l:`Mempelajari`, cur3_v:`Pengembangan full-stack`,
     t1:`Kreatif`, t2:`Analitis`, t3:`Cepat Belajar`, t4:`Teliti`, t5:`Pemecah Masalah`, t6:`Suka Kolaborasi`, t7:`Terorganisir`,
     ct_eyebrow:`Hubungi Saya`, ct_title:`Punya proyek<br>di pikiran?`,
-    ct_sub:`Terbuka untuk kolaborasi, freelance, dan diskusi ide.<br><svg class="ui-icon cta-response-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Respons dalam 24 jam â€” mari wujudkan sesuatu yang luar biasa.`,
+    ct_sub:`Terbuka untuk kolaborasi, freelance, dan diskusi ide.<br><svg class="ui-icon cta-response-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Respons dalam 24 jam — mari wujudkan sesuatu yang luar biasa.`,
     ct_email:`Kirim Email`, foot:`&copy; 2026 Teuku Al Jumanatul Ali &mdash; Dibuat dengan sepenuh hati`
   },
   en: {
@@ -1770,9 +1920,9 @@ const I18N = {
     sk_eyebrow:`My Capabilities`, sk_title:`What I<br>Can Do`,
     sk_intro:`Combining technical skills, creativity, and problem-solving to build digital solutions that make an impact.`,
     cap1_cat:`IT / Web Development`,
-    cap1_desc:`Building functional digital systems â€” from database-driven web apps to responsive, fast interactive interfaces.`,
-    cap2_cat:`Data Visualization &<br>Low-code`,
-    cap2_desc:`Turning raw data into meaningful visuals & building applications efficiently with modern low-code platforms.`,
+    cap1_desc:`Building functional digital systems — from database-driven web apps to responsive, fast interactive interfaces.`,
+    cap2_cat:`Cyber<br>Security`,
+    cap2_desc:`Analyzing application and network security, identifying vulnerabilities, and implementing protections to keep systems and data secure.`,
     ab_eyebrow:`About Me`, ab_sub:`Informatics | Syiah Kuala University`,
     st_projects:`Projects`, st_clients:`Clients`, st_exp:`Years Exp.`,
     bio1:`I'm an Informatics student focused on <strong>web development, data visualization, and low-code platforms</strong>. I enjoy turning real-world problems into practical, impactful digital solutions.`,
@@ -1781,7 +1931,7 @@ const I18N = {
     cur1_l:`Building`, cur1_v:`Web & data projects`, cur2_l:`Exploring`, cur2_v:`AI & automation`, cur3_l:`Learning`, cur3_v:`Full-stack dev`,
     t1:`Creative`, t2:`Analytical`, t3:`Fast Learner`, t4:`Detail-Oriented`, t5:`Problem Solver`, t6:`Collaborative`, t7:`Organized`,
     ct_eyebrow:`Get In Touch`, ct_title:`Got a project<br>in mind?`,
-    ct_sub:`Open to collaboration, freelance work, and idea discussions.<br><svg class="ui-icon cta-response-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>I reply within 24 hours â€” let's build something great.`,
+    ct_sub:`Open to collaboration, freelance work, and idea discussions.<br><svg class="ui-icon cta-response-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>I reply within 24 hours — let's build something great.`,
     ct_email:`Send Email`, foot:`&copy; 2026 Teuku Al Jumanatul Ali &mdash; Made with care`
   }
 };
@@ -1797,7 +1947,7 @@ function applyLang(l) {
     if (el.classList.contains('cap-desc')) {
       const icon = el.dataset.i18n === 'cap1_desc'
         ? '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m8 9-3 3 3 3m8-6 3 3-3 3m-4-8-2 10"/></svg>'
-        : '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7"/></svg>';
+        : '<svg class="ui-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/></svg>';
       if (!el.querySelector('.ui-icon')) el.insertAdjacentHTML('afterbegin', icon);
       const textNode = [...el.childNodes].find(node => node.nodeType === Node.TEXT_NODE);
       if (textNode) {
@@ -1812,85 +1962,61 @@ function applyLang(l) {
   try { localStorage.setItem('lang', l); } catch (e) {}
 }
 function setLang(l) {
-  if (l === lang) return;
-  if (!document.startViewTransition || reduce) return applyLang(l);
+  if (l === lang || root.classList.contains('lang-vt')) return;
+  if (!document.startViewTransition || reduce || !finePointer.matches || themeBusy) return applyLang(l);
   root.classList.add('lang-vt');
-  const vt = document.startViewTransition(() => applyLang(l));
-  vt.finished.finally(() => root.classList.remove('lang-vt'));
+  try {
+    const vt = document.startViewTransition(() => applyLang(l));
+    const clean = () => root.classList.remove('lang-vt');
+    vt.ready.catch(() => {});
+    vt.finished.then(clean, clean);
+  } catch (e) { root.classList.remove('lang-vt'); applyLang(l); }
 }
 langSw.querySelectorAll('button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
 applyLang(lang);
 
-/* Type the gallery heading once, the first time it enters the viewport. */
-const workTitle = document.getElementById('workTitleText');
-let workTitleTyped = false;
-const workTitleObserver = new IntersectionObserver(([entry]) => {
-  if (!entry.isIntersecting || workTitleTyped) return;
-  workTitleTyped = true;
-  workTitleObserver.disconnect();
-
-  if (reduce) return;
-  const titleLanguage = lang;
-  const title = workTitle.textContent.trim();
-  let index = 0;
-  workTitle.textContent = '';
-
-  function typeWorkTitle() {
-    if (titleLanguage !== lang) return;
-    workTitle.textContent = title.slice(0, ++index);
-    if (index < title.length) setTimeout(typeWorkTitle, 58);
-  }
-
-  typeWorkTitle();
-}, { threshold: .65 });
-workTitleObserver.observe(workTitle);
-
-/* â”€â”€â”€ MOBILE MENU â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-document.getElementById('menuBtn').addEventListener('click', () => {
-  document.getElementById('mobMenu').classList.add('open');
-  document.getElementById('menuBtn').setAttribute('aria-expanded', 'true');
+/* Mobile navigation: reversible fade, focus containment, scroll lock. */
+const mobMenu = document.getElementById('mobMenu');
+const menuBtn = document.getElementById('menuBtn');
+const mobClose = document.getElementById('mobClose');
+menuBtn.addEventListener('click', () => {
+  mobMenu.inert = false;
+  mobMenu.setAttribute('aria-hidden', 'false');
+  mobMenu.classList.add('open');
+  root.classList.add('menu-open');
+  menuBtn.setAttribute('aria-expanded', 'true');
+  mobClose.focus({ preventScroll: true });
+  restartAuto();
 });
-document.getElementById('mobClose').addEventListener('click', closeMob);
-function closeMob() {
-  document.getElementById('mobMenu').classList.remove('open');
-  document.getElementById('menuBtn').setAttribute('aria-expanded', 'false');
+mobClose.addEventListener('click', () => closeMob());
+function closeMob(restoreFocus = true) {
+  const wasOpen = mobMenu.classList.contains('open');
+  if (!wasOpen) return;
+  if (restoreFocus) menuBtn.focus({ preventScroll: true });
+  else if (mobMenu.contains(document.activeElement)) document.activeElement.blur();
+  mobMenu.classList.remove('open');
+  mobMenu.inert = true;
+  mobMenu.setAttribute('aria-hidden', 'true');
+  root.classList.remove('menu-open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  restartAuto();
 }
+mobMenu.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { e.preventDefault(); closeMob(); }
+  if (e.key !== 'Tab') return;
+  const items = [...mobMenu.querySelectorAll('a, button')];
+  const first = items[0], last = items[items.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+matchMedia('(min-width: 901px)').addEventListener('change', e => { if (e.matches) closeMob(false); });
 
-/* â”€â”€â”€ SCROLL REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-function typeHeadingOnceOnReveal(heading) {
-  let hasTyped = false;
-  const observer = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting || hasTyped) return;
-    hasTyped = true;
-    observer.disconnect();
-    if (reduce) return;
-    const languageAtStart = lang;
-    const parts = heading.innerHTML.match(/<br\s*\/?\s*>|[^<]+/gi) || [];
-    heading.innerHTML = '';
-    let partIndex = 0, charIndex = 0;
-    const typeNext = () => {
-      if (languageAtStart !== lang || partIndex >= parts.length) return;
-      const part = parts[partIndex];
-      if (/^<br/i.test(part)) {
-        heading.insertAdjacentHTML('beforeend', '<br>');
-        partIndex++; charIndex = 0;
-      } else {
-        const chars = Array.from(part);
-        heading.append(document.createTextNode(chars[charIndex++]));
-        if (charIndex >= chars.length) { partIndex++; charIndex = 0; }
-      }
-      if (partIndex < parts.length) setTimeout(typeNext, 48);
-    };
-    typeNext();
-  }, { threshold: 0.2 });
-  observer.observe(heading);
-}
-document.querySelectorAll('.sec-title.rv').forEach(typeHeadingOnceOnReveal);
-
+/* Reveal each element once without changing its measured size. */
 const ro = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
 }, { threshold: 0.1, rootMargin: '0px 0px -28px 0px' });
 document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+root.classList.add('reveal-ready');
 setTimeout(() => {
   document.querySelectorAll('#hero .rv').forEach(el => el.classList.add('in'));
 }, 200);
@@ -1914,8 +2040,15 @@ updateNavState();
 
 document.addEventListener('visibilitychange', () => {
   document.documentElement.classList.toggle('motion-paused', document.hidden);
-  if (!document.hidden) restartAuto();
+  restartAuto();
 });
+
+// Continuous CSS motion only runs near the viewport.
+const motionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => entry.target.classList.toggle('motion-offscreen', !entry.isIntersecting));
+}, { rootMargin: '100px' });
+document.querySelectorAll('section').forEach(section => motionObserver.observe(section));
+motionPreference.addEventListener('change', e => { reduce = e.matches; restartAuto(); });
 </script>
 </body>
 </html>
