@@ -1678,7 +1678,7 @@ themeBtn.addEventListener('click', () => {
   const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
 
   if (reduce) { applyTheme(nextTheme); return; }
-  if (typeof document.startViewTransition !== 'function' || !finePointer.matches || root.classList.contains('lang-vt')) {
+  if (typeof document.startViewTransition !== 'function' || root.classList.contains('lang-vt')) {
     fadeTheme(nextTheme);
     return;
   }
